@@ -14,7 +14,7 @@ public class Main {
         Board.printBoard(board);
 
         Scanner scanner = new Scanner(System.in);
-        Vector[] moves = new Vector[0];
+        MoveVector[] moves = new MoveVector[0];
 
         while(true){
             String line = scanner.nextLine();

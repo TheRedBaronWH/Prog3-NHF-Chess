@@ -28,6 +28,27 @@ public abstract class Piece {
         return hasmoved;
     }
 
+    public MoveVector[] addMove(Board[][] board, MoveVector[] moves, int x, int y, Boolean[] stop, int i){
+        if(board[x][y].getPiece()!=null){
+            if(board[x][y].getPiece().isWhite()!=this.isWhite()) {
+                moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
+            }
+            stop[i] = true;
+        }
+        else moves = MoveVector.addVector(moves, new MoveVector(x, y, 1));
+        return moves;
+    }
+
+    public MoveVector[] addMoveSingle(Board[][] board, MoveVector[] moves, int x, int y){
+        if(board[x][y].getPiece()!=null){
+            if(board[x][y].getPiece().isWhite()!=this.isWhite()) {
+                moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
+            }
+        }
+        else moves = MoveVector.addVector(moves, new MoveVector(x, y, 1));
+        return moves;
+    }
+
     public abstract String getType();
-    public abstract Vector[] availableMoves(Board[][] board);
+    public abstract MoveVector[] availableMoves(Board[][] board);
 }

@@ -10,19 +10,19 @@ public class Pawn extends Piece{
         hasmoved = false;
     }
 
-    public Vector[] availableMoves(Board[][] board){
+    public MoveVector[] availableMoves(Board[][] board){
         int x = getPoz().getX();
         int y = getPoz().getY();
-        Vector[] moves = new Vector[0];
+        MoveVector[] moves = new MoveVector[0];
         if(isWhite()) {
-            if (y - 1 >= 0) moves = Vector.addVector(moves, new Vector(x - 1, y - 1));
-            moves = Vector.addVector(moves, new Vector(x - 1, y + 0));
-            if (y + 1 <= 7) moves = Vector.addVector(moves, new Vector(x - 1, y + 1));
+            if (y - 1 >= 0) moves = addMoveSingle(board, moves, x - 1, y - 1);
+            moves = addMoveSingle(board, moves, x - 1, y + 0);
+            if (y + 1 <= 7) moves = addMoveSingle(board, moves, x - 1, y + 1);
         }
         else{
-            if (y - 1 >= 0) moves = Vector.addVector(moves, new Vector(x + 1, y - 1));
-            moves = Vector.addVector(moves, new Vector(x + 1, y + 0));
-            if (y + 1 <= 7) moves = Vector.addVector(moves, new Vector(x + 1, y + 1));
+            if (y - 1 >= 0) moves = addMoveSingle(board, moves, x + 1, y - 1);
+            moves = addMoveSingle(board, moves, x + 1, y + 0);
+            if (y + 1 <= 7) moves = addMoveSingle(board, moves, x + 1, y + 1);
         }
         return moves;
     }

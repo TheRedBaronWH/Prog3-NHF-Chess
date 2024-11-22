@@ -26,10 +26,11 @@ public class Vector {
         return temp;
     }
 
-    public static void copyVector(Vector[] old, Vector[] newVector) {
-        newVector = new Vector[old.length];
+    public static Vector[] copyVector(Vector[] old) {
+        Vector[] temp = new Vector[old.length];
         for (int i = 0; i < old.length; i++) {
-            newVector[i] = old[i];
+            temp[i] = old[i];
         }
+        return temp;
     }
 }

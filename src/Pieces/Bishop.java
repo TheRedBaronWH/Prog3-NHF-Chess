@@ -10,15 +10,23 @@ public class Bishop extends Piece {
         hasmoved = false;
     }
 
-    public Vector[] availableMoves(Board[][] board){
+    public MoveVector[] availableMoves(Board[][] board){
         int x = getPoz().getX();
         int y = getPoz().getY();
-        Vector[] moves = new Vector[0];
+        MoveVector[] moves = new MoveVector[0];
+        Boolean[] stop = new Boolean[4];
+        for(int i = 0; i<4; i++){
+            stop[i] = false;
+        }
         for(int i = 1; i < 8; i++){
-            if(x-i>=0 && y+i<=7) moves = Vector.addVector(moves, new Vector(x-i, y+i));
-            if(x+i<=7 && y+i<=7) moves = Vector.addVector(moves, new Vector(x+i, y+i));
-            if(x+i<=7 && y-i>=0) moves = Vector.addVector(moves, new Vector(x+i, y-i));
-            if(x-i>=0 && y-i>=0) moves = Vector.addVector(moves, new Vector(x-i, y-i));
+            if(x-i>=0 && y+i<=7 && !stop[0])
+                moves = addMove(board, moves, x - i, y + i, stop, 0);
+            if(x+i<=7 && y+i<=7 && !stop[1])
+                moves = addMove(board, moves, x + i, y + i, stop, 1);
+            if(x+i<=7 && y-i>=0 && !stop[2])
+                moves = addMove(board, moves, x + i, y - i, stop, 2);
+            if(x-i>=0 && y-i>=0 && !stop[3])
+                moves = addMove(board, moves, x - i, y - i, stop, 3);
         }
         return moves;
     }
