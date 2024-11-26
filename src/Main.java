@@ -19,11 +19,17 @@ public class Main {
         while(true){
             String line = scanner.nextLine();
             String[] cmd = line.split(" ");
+            int i = Integer.parseInt(cmd[0]);
+            int j = Integer.parseInt(cmd[1]);
+            //moves = board[x][y].getPiece().availableMoves(board);
+            //System.out.println(board[x][y].getPiece().getType() + " " + moves.length);
+            //Board.printMoves(moves);
+            line = scanner.nextLine();
+            cmd = line.split(" ");
             int x = Integer.parseInt(cmd[0]);
             int y = Integer.parseInt(cmd[1]);
-            moves = board[x][y].getPiece().availableMoves(board);
-            System.out.println(board[x][y].getPiece().getType() + " " + moves.length);
-            Board.printMoves(moves);
+            System.out.println(Board.movePiece(board, board[i][j].getPiece(), x, y));
+            Board.printBoard(board);
         }
     }
 }

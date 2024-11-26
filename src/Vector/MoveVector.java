@@ -8,8 +8,8 @@ public class MoveVector extends Vector{
         this.takeable = takeable;
     }
 
-    public boolean isTakeable(){
-        return takeable == 2;
+    public int getTakeable(){
+        return takeable;
     }
 
     public static MoveVector[] addVector(MoveVector[] moves, MoveVector vector) {
@@ -19,5 +19,14 @@ public class MoveVector extends Vector{
         }
         temp[temp.length - 1] = vector;
         return temp;
+    }
+
+    public static boolean contains(MoveVector[] moves, int x, int y) {
+        for(int i = 0; i < moves.length; i++){
+            if(moves[i].getX() == x && moves[i].getY() == y){
+                return true;
+            }
+        }
+        return false;
     }
 }

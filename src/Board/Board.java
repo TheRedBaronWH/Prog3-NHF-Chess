@@ -24,6 +24,16 @@ public class Board {
         this.piece = piece;
     }
 
+    public static boolean movePiece(Board[][] board, Piece piece, int x, int y) {
+        MoveVector[] moves = piece.availableMoves(board);
+        if(MoveVector.contains(moves, x, y)) {
+            board[x][y].setPiece(piece);
+            board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(null);
+            return true;
+        }
+        return false;
+    }
+
     public static void setBoard(Board[][] board){
         for(int i = 0; i < 8; i++){
             board[0][i] = new Board(new Vector(0, i));
@@ -49,7 +59,7 @@ public class Board {
             for(int j = 0; j < 8; j++){
                 board[i][j] = new Board(new Vector(i, j));
                 if(i==1) {
-                    board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
+                    //board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
                 }
                 if(i==6) {
                     board[i][j].setPiece(new Pawn(board[i][j].getPoz(), true));
@@ -81,7 +91,10 @@ public class Board {
                         case "K" -> board[i][j].setPiece(new King(board[i][j].getPoz(), true));
                         case "p" -> board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
                         case "P" -> board[i][j].setPiece(new Pawn(board[i][j].getPoz(), true));
-                        default -> skip = Integer.parseInt(code[count]) - 1;
+                        default -> {
+                            skip = Integer.parseInt(code[count]) - 1;
+                            board[i][j].setPiece(null);
+                        }
                     }
                     count++;
                 }
@@ -106,7 +119,7 @@ public class Board {
         }
     }
 
-    public static void printMoves(Vector[] moves){
+    public static void printMoves(MoveVector[] moves){
         int[][] board = new int[8][8];
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
@@ -114,7 +127,7 @@ public class Board {
             }
         }
         for(int i=0; i<moves.length; i++){
-            board[moves[i].getX()][moves[i].getY()] = 1;
+            board[moves[i].getX()][moves[i].getY()] = moves[i].getTakeable();
         }
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
