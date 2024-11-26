@@ -24,14 +24,26 @@ public class Board {
         this.piece = piece;
     }
 
-    public static boolean movePiece(Board[][] board, Piece piece, int x, int y) {
+    public static int movePiece(Board[][] board, Piece piece, int x, int y) {
         MoveVector[] moves = piece.availableMoves(board);
         if(MoveVector.contains(moves, x, y)) {
-            board[x][y].setPiece(piece);
+            int i = 1;
+            if(piece.getType()=="r" || piece.getType()=="R" || piece.getType()=="k" || piece.getType()=="K") {
+                piece.setHasMoved();
+            }
+            if(MoveVector.moveType(moves, x, y) == 3){
+                if(piece.getType()=="K") {
+                    i = 2;
+                }
+                else i = 3;
+            }
             board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(null);
-            return true;
+            piece.setPoz(new Vector(x, y));
+            board[x][y].setPiece(piece);
+            System.out.println(MoveVector.moveType(moves, x, y));
+            return i;
         }
-        return false;
+        return 0;
     }
 
     public static void setBoard(Board[][] board){

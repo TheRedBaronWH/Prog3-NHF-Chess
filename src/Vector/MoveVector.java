@@ -29,4 +29,15 @@ public class MoveVector extends Vector{
         }
         return false;
     }
+
+    public static int moveType(MoveVector[] moves, int x, int y){
+        if(contains(moves, x, y)){
+            for(int i = 0; i < moves.length; i++){
+                if(moves[i].getX() == x && moves[i].getY() == y){
+                    return moves[i].getTakeable();
+                }
+            }
+        }
+        return 0;
+    }
 }

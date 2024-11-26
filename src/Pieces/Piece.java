@@ -16,6 +16,8 @@ public abstract class Piece {
         this.poz = poz;
     }
 
+    public void setHasMoved(){ this.hasmoved = true; }
+
     public boolean isWhite(){
         return white;
     }
@@ -24,14 +26,15 @@ public abstract class Piece {
         return poz;
     }
 
-    public boolean hasMoved() {
-        return hasmoved;
-    }
+    public boolean hasMoved() { return hasmoved; }
 
     public MoveVector[] addMove(Board[][] board, MoveVector[] moves, int x, int y, Boolean[] stop, int i){
         if(board[x][y].getPiece()!=null){
             if(board[x][y].getPiece().isWhite()!=this.isWhite()) {
-                moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
+                if((this.isWhite() && board[x][y].getPiece().getType() == "k") || (!this.isWhite() && board[x][y].getPiece().getType() == "K")){
+                    moves = MoveVector.addVector(moves, new MoveVector(x, y, 3));
+                }
+                else moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
             }
             stop[i] = true;
         }
