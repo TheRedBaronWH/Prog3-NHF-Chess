@@ -14,16 +14,14 @@ public class MoveVector extends Vector{
 
     public static MoveVector[] addVector(MoveVector[] moves, MoveVector vector) {
         MoveVector[] temp = new MoveVector[moves.length + 1];
-        for (int i = 0; i < moves.length; i++) {
-            temp[i] = moves[i];
-        }
+        System.arraycopy(moves, 0, temp, 0, moves.length);
         temp[temp.length - 1] = vector;
         return temp;
     }
 
     public static boolean contains(MoveVector[] moves, int x, int y) {
-        for(int i = 0; i < moves.length; i++){
-            if(moves[i].getX() == x && moves[i].getY() == y){
+        for (MoveVector move : moves) {
+            if (move.getX() == x && move.getY() == y) {
                 return true;
             }
         }
@@ -32,9 +30,9 @@ public class MoveVector extends Vector{
 
     public static int moveType(MoveVector[] moves, int x, int y){
         if(contains(moves, x, y)){
-            for(int i = 0; i < moves.length; i++){
-                if(moves[i].getX() == x && moves[i].getY() == y){
-                    return moves[i].getTakeable();
+            for (MoveVector move : moves) {
+                if (move.getX() == x && move.getY() == y) {
+                    return move.getTakeable();
                 }
             }
         }

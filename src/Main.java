@@ -17,18 +17,16 @@ public class Main {
 
     public static void main(String[] args) {
         Board.setBoard(board);
-        //String code = "p1p1p1p1/1p1p1p1p/8/8/p1p1p1p1/1p1p1p1p/8/8";
-        //Board.loadBoardCode(board,code);
         Board.printBoard(board);
 
         Scanner scanner = new Scanner(System.in);
-        MoveVector[] moves = new MoveVector[0];
+        MoveVector[] moves;
 
         while(!gameEnd){
             String line = scanner.nextLine();
             String[] cmd = line.split(" ");
             switch(cmd[0]) {
-                case "HasPiece" -> {
+                case "HP" -> {
                     int i = Integer.parseInt(cmd[1]);
                     int j = Integer.parseInt(cmd[2]);
                     if(board[i][j] == null){
@@ -37,7 +35,7 @@ public class Main {
                     else System.out.println(board[i][j].getPiece().getType());
                 }
 
-                case "AvailableMoves" -> {
+                case "AM" -> {
                     int i = Integer.parseInt(cmd[1]);
                     int j = Integer.parseInt(cmd[2]);
                     moves = board[i][j].getPiece().availableMoves(board);
@@ -45,7 +43,7 @@ public class Main {
                     Board.printMoves(moves);
                 }
 
-                case "Move" -> {
+                case "M" -> {
                     int i = Integer.parseInt(cmd[1]);
                     int j = Integer.parseInt(cmd[2]);
                     line = scanner.nextLine();
@@ -53,14 +51,20 @@ public class Main {
                     int x = Integer.parseInt(cmd[0]);
                     int y = Integer.parseInt(cmd[1]);
                     int move = Board.movePiece(board, board[i][j].getPiece(), x, y);
-                    if(move == 2 || move == 3){
+                    if(move == 4 || move == 5){
                         setGameEnd(move);
+                    }
+                    if(move == 2){
+                        System.out.println("Fehér bábú levéve");
+                    }
+                    if(move == 3){
+                        System.out.println("Fekete bábú levéve");
                     }
                     System.out.println(move);
                     Board.printBoard(board);
                 }
 
-                case "CheckHasMoved" -> {
+                case "CHM" -> {
                     int x = Integer.parseInt(cmd[1]);
                     int y = Integer.parseInt(cmd[2]);
                     System.out.println(board[x][y].getPiece().hasMoved());

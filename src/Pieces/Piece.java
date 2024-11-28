@@ -31,10 +31,19 @@ public abstract class Piece {
     public MoveVector[] addMove(Board[][] board, MoveVector[] moves, int x, int y, Boolean[] stop, int i){
         if(board[x][y].getPiece()!=null){
             if(board[x][y].getPiece().isWhite()!=this.isWhite()) {
-                if((this.isWhite() && board[x][y].getPiece().getType() == "k") || (!this.isWhite() && board[x][y].getPiece().getType() == "K")){
+                if((this.isWhite() && board[x][y].getPiece().getType().equals("k")) || (!this.isWhite() && board[x][y].getPiece().getType().equals("K"))){
                     moves = MoveVector.addVector(moves, new MoveVector(x, y, 3));
                 }
                 else moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
+            }
+            else{
+                if(board[x][y].getPiece().getType().equals("K") && this.getType().equals("R") ||
+                        board[x][y].getPiece().getType().equals("k") && this.getType().equals("r") ||
+                        board[x][y].getPiece().getType().equals("R") && this.getType().equals("K") ||
+                        board[x][y].getPiece().getType().equals("r") && this.getType().equals("k")
+                ){
+                    moves = MoveVector.addVector(moves, new MoveVector(x, y, 4));
+                }
             }
             stop[i] = true;
         }
@@ -46,6 +55,19 @@ public abstract class Piece {
         if(board[x][y].getPiece()!=null){
             if(board[x][y].getPiece().isWhite()!=this.isWhite()) {
                 moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
+            }
+        }
+        else moves = MoveVector.addVector(moves, new MoveVector(x, y, 1));
+        return moves;
+    }
+
+    public MoveVector[] addMoveSingle(Board[][] board, MoveVector[] moves, int x, int y, boolean bypass){
+        if(board[x][y].getPiece()!=null){
+            if(board[x][y].getPiece().isWhite()!=this.isWhite()) {
+                moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
+            }
+            if(bypass){
+                moves = MoveVector.addVector(moves, new MoveVector(x, y, 3));
             }
         }
         else moves = MoveVector.addVector(moves, new MoveVector(x, y, 1));

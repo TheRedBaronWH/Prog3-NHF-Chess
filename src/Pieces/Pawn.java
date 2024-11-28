@@ -15,14 +15,12 @@ public class Pawn extends Piece{
         int y = getPoz().getY();
         MoveVector[] moves = new MoveVector[0];
         if(isWhite()) {
-            if (y - 1 >= 0) moves = addMoveSingle(board, moves, x - 1, y - 1);
-            moves = addMoveSingle(board, moves, x - 1, y + 0);
-            if (y + 1 <= 7) moves = addMoveSingle(board, moves, x - 1, y + 1);
+            moves = addMoveSingle(board, moves, x - 1, y);
+            moves = addMoveSingle(board, moves, x - 2, y);
         }
         else{
-            if (y - 1 >= 0) moves = addMoveSingle(board, moves, x + 1, y - 1);
-            moves = addMoveSingle(board, moves, x + 1, y + 0);
-            if (y + 1 <= 7) moves = addMoveSingle(board, moves, x + 1, y + 1);
+            moves = addMoveSingle(board, moves, x + 1, y);
+            moves = addMoveSingle(board, moves, x + 2, y);
         }
         return moves;
     }

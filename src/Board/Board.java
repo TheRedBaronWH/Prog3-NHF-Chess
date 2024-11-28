@@ -25,16 +25,18 @@ public class Board {
     }
 
     public static int movePiece(Board[][] board, Piece piece, int x, int y) {
+        int i = 0;
         MoveVector[] moves = piece.availableMoves(board);
         if(MoveVector.contains(moves, x, y)) {
-            int i = 1;
-            if(piece.getType()=="r" || piece.getType()=="R" || piece.getType()=="k" || piece.getType()=="K") {
-                piece.setHasMoved();
+            i = 1;
+            piece.setHasMoved();
+            if (MoveVector.moveType(moves, x, y) == 3) {
+                if (piece.getType().equals("K")) {
+                    i = 4;
+                } else i = 5;
             }
-            if(MoveVector.moveType(moves, x, y) == 3){
-                if(piece.getType()=="K") {
-                    i = 2;
-                }
+            if(MoveVector.moveType(moves, x, y) == 2) {
+                if(board[x][y].getPiece().isWhite()) i=2;
                 else i = 3;
             }
             board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(null);
@@ -43,7 +45,7 @@ public class Board {
             System.out.println(MoveVector.moveType(moves, x, y));
             return i;
         }
-        return 0;
+        return i;
     }
 
     public static void setBoard(Board[][] board){
@@ -52,12 +54,12 @@ public class Board {
             board[7][i] = new Board(new Vector(7, i));
         }
         board[0][0].setPiece(new Rook(board[0][0].getPoz(), false));
-        board[0][1].setPiece(new Knight(board[0][1].getPoz(), false));
-        board[0][2].setPiece(new Bishop(board[0][2].getPoz(), false));
-        board[0][3].setPiece(new Queen(board[0][3].getPoz(), false));
+        //board[0][1].setPiece(new Knight(board[0][1].getPoz(), false));
+        //board[0][2].setPiece(new Bishop(board[0][2].getPoz(), false));
+        //board[0][3].setPiece(new Queen(board[0][3].getPoz(), false));
         board[0][4].setPiece(new King(board[0][4].getPoz(), false));
-        board[0][5].setPiece(new Bishop(board[0][5].getPoz(), false));
-        board[0][6].setPiece(new Knight(board[0][6].getPoz(), false));
+        //board[0][5].setPiece(new Bishop(board[0][5].getPoz(), false));
+        //board[0][6].setPiece(new Knight(board[0][6].getPoz(), false));
         board[0][7].setPiece(new Rook(board[0][7].getPoz(), false));
         board[7][0].setPiece(new Rook(board[7][0].getPoz(), true));
         board[7][1].setPiece(new Knight(board[7][1].getPoz(), true));
@@ -71,7 +73,7 @@ public class Board {
             for(int j = 0; j < 8; j++){
                 board[i][j] = new Board(new Vector(i, j));
                 if(i==1) {
-                    //board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
+                    board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
                 }
                 if(i==6) {
                     board[i][j].setPiece(new Pawn(board[i][j].getPoz(), true));

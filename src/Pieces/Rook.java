@@ -10,6 +10,24 @@ public class Rook extends Piece {
         hasmoved = false;
     }
 
+    public MoveVector[] sanc(Board[][] board, MoveVector[] moves, int x, int y){
+        if(!hasMoved()){
+            if(y == 0) {
+                for (int i = 1; i < 4; i++) {
+                    if (board[x][i].getPiece() != null) return moves;
+                }
+            }
+            if(y==7) {
+                for (int i = 5; i < 7; i++) {
+                    if (board[x][i].getPiece() != null) return moves;
+                }
+            }
+            if(!board[x][4].getPiece().hasMoved()) moves = addMoveSingle(board, moves, x, 4, true);
+            return moves;
+        }
+        return moves;
+    }
+
     public MoveVector[] availableMoves(Board[][] board){
         int x = getPoz().getX();
         int y = getPoz().getY();
@@ -28,6 +46,7 @@ public class Rook extends Piece {
             if(y-i>=0 && !stop[3])
                 moves = addMove(board, moves, x, y - i, stop, 3);
         }
+        moves = sanc(board, moves, x, y);
         return moves;
     }
 
