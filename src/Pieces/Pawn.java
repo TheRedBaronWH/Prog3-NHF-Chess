@@ -3,30 +3,64 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
-public class Pawn extends Piece{
-    public Pawn(Vector poz, boolean white){
+public class Pawn extends Piece {
+    private boolean doubleStep = false;
+
+    public Pawn(Vector poz, boolean white) {
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
     }
 
-    public MoveVector[] availableMoves(Board[][] board){
+    @Override
+    public boolean wasDoubleStep() {
+        return doubleStep;
+    }
+
+    public MoveVector[] availableMoves(Board[][] board) {
         int x = getPoz().getX();
         int y = getPoz().getY();
         MoveVector[] moves = new MoveVector[0];
-        if(isWhite()) {
-            moves = addMoveSingle(board, moves, x - 1, y);
-            moves = addMoveSingle(board, moves, x - 2, y);
-        }
-        else{
-            moves = addMoveSingle(board, moves, x + 1, y);
-            moves = addMoveSingle(board, moves, x + 2, y);
-        }
+        moves = addMoveSingle(board, moves, x, y);
         return moves;
     }
 
-    public String getType() {
+    public MoveVector[] addMoveSingle(Board[][] board, MoveVector[] moves, int x, int y) {
+        int i = 1;
+        if (isWhite()) i = -1;
+        if (x + i < 7) {
+            if (board[x + i][y].getPiece() == null) {
+                if (doubleStep) doubleStep = false;
+                moves = MoveVector.addVector(moves, new MoveVector(x + i, y, 1));
+                if (!hasMoved() && board[x + 2 * i][y].getPiece() == null) {
+                    moves = MoveVector.addVector(moves, new MoveVector(x + 2 * i, y, 1));
+                    doubleStep = true;
+                }
+            }
+            else {
+                if ((board[x + i][y].getPiece().getType().equals("p") || board[x + i][y].getPiece().getType().equals("P")) && board[x + i][y].getPiece().wasDoubleStep()) {
+                    if (x + i >= 0 && y - 1 > 0) {
+                        if (board[x + i][y - 1].getPiece() != null)
+                            moves = MoveVector.addVector(moves, new MoveVector(x + i, y, 2));
+                        else moves = MoveVector.addVector(moves, new MoveVector(x + i, y - 1, 5));
+                    }
+                    if (x + i >= 0 && y + 1 < 8) {
+                        if (board[x + i][y + 1].getPiece() != null)
+                            moves = MoveVector.addVector(moves, new MoveVector(x + i, y + 1, 2));
+                        else moves = MoveVector.addVector(moves, new MoveVector(x + i, y + 1, 6));
+                    }
+                }
+            }
+        }
+        else if(x+i==7)  change();
+        return moves;
+    }
+
+    public String getType(){
         if(isWhite()) return "P";
         else return "p";
     }
+
+    //to be implemented
+    public void change(){}
 }

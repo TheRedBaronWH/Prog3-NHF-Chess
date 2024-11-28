@@ -30,14 +30,30 @@ public class Board {
         if(MoveVector.contains(moves, x, y)) {
             i = 1;
             piece.setHasMoved();
-            if (MoveVector.moveType(moves, x, y) == 3) {
-                if (piece.getType().equals("K")) {
-                    i = 4;
-                } else i = 5;
-            }
-            if(MoveVector.moveType(moves, x, y) == 2) {
-                if(board[x][y].getPiece().isWhite()) i=2;
-                else i = 3;
+            switch(MoveVector.moveType(moves, x, y)) {
+                //EnPassant jobbra
+                case 6 -> {
+
+                }
+                //EnPassant balra
+                case 5 -> {
+
+                }
+                //sanc
+                case 4 -> {
+
+                }
+                //király leszedés
+                case 3 -> {
+                    if (piece.getType().equals("K")) {
+                        i = 4;
+                    } else i = 5;
+                }
+                //normális leszedés
+                case 2 -> {
+                    if(board[x][y].getPiece().isWhite()) i=2;
+                    else i = 3;
+                }
             }
             board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(null);
             piece.setPoz(new Vector(x, y));
@@ -54,12 +70,12 @@ public class Board {
             board[7][i] = new Board(new Vector(7, i));
         }
         board[0][0].setPiece(new Rook(board[0][0].getPoz(), false));
-        //board[0][1].setPiece(new Knight(board[0][1].getPoz(), false));
-        //board[0][2].setPiece(new Bishop(board[0][2].getPoz(), false));
-        //board[0][3].setPiece(new Queen(board[0][3].getPoz(), false));
+        board[0][1].setPiece(new Knight(board[0][1].getPoz(), false));
+        board[0][2].setPiece(new Bishop(board[0][2].getPoz(), false));
+        board[0][3].setPiece(new Queen(board[0][3].getPoz(), false));
         board[0][4].setPiece(new King(board[0][4].getPoz(), false));
-        //board[0][5].setPiece(new Bishop(board[0][5].getPoz(), false));
-        //board[0][6].setPiece(new Knight(board[0][6].getPoz(), false));
+        board[0][5].setPiece(new Bishop(board[0][5].getPoz(), false));
+        board[0][6].setPiece(new Knight(board[0][6].getPoz(), false));
         board[0][7].setPiece(new Rook(board[0][7].getPoz(), false));
         board[7][0].setPiece(new Rook(board[7][0].getPoz(), true));
         board[7][1].setPiece(new Knight(board[7][1].getPoz(), true));

@@ -67,13 +67,14 @@ public abstract class Piece {
                 moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
             }
             if(bypass){
-                moves = MoveVector.addVector(moves, new MoveVector(x, y, 3));
+                moves = MoveVector.addVector(moves, new MoveVector(x, y, 4));
             }
         }
         else moves = MoveVector.addVector(moves, new MoveVector(x, y, 1));
         return moves;
     }
 
+    public boolean wasDoubleStep() { return false; }
     public abstract String getType();
     public abstract MoveVector[] availableMoves(Board[][] board);
 }
