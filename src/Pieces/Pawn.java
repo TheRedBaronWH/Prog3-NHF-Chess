@@ -32,6 +32,10 @@ public class Pawn extends Piece {
     public MoveVector[] addMoveSingle(Board[][] board, MoveVector[] moves, int x, int y) {
         int i = 1;
         if (isWhite()) i = -1;
+        if(x+i>=0 && x+i<=7 && y-1>=0 && board[x+i][y-1].getPiece()!= null && board[x+i][y-1].getPiece().isWhite()!=this.isWhite())
+            moves = MoveVector.addVector(moves, new MoveVector(x+i,y-1,2));
+        if(x+i>=0 && x+i<=7 && y+1<=7 && board[x+i][y+1].getPiece()!= null && board[x+i][y+1].getPiece().isWhite()!=this.isWhite())
+            moves = MoveVector.addVector(moves, new MoveVector(x+i,y+1,2));
         if (x + i < 7 && x + i > 0) {
             if (board[x + i][y].getPiece() == null) {
                 if (doubleStep) doubleStep = false;
@@ -43,20 +47,16 @@ public class Pawn extends Piece {
             }
             else {
                 if ((board[x + i][y].getPiece().getType().equals("p") || board[x + i][y].getPiece().getType().equals("P")) && board[x + i][y].getPiece().wasDoubleStep()) {
-                    if (x + i >= 0 && y - 1 > 0) {
-                        if (board[x + i][y - 1].getPiece() != null)
-                            moves = MoveVector.addVector(moves, new MoveVector(x + i, y, 2));
-                        else moves = MoveVector.addVector(moves, new MoveVector(x + i, y - 1, 5));
+                    if (y - 1 > 0) {
+                        if (board[x + i][y - 1].getPiece() == null) moves = MoveVector.addVector(moves, new MoveVector(x + i, y - 1, 5));
                     }
-                    if (x + i >= 0 && y + 1 < 8) {
-                        if (board[x + i][y + 1].getPiece() != null)
-                            moves = MoveVector.addVector(moves, new MoveVector(x + i, y + 1, 2));
-                        else moves = MoveVector.addVector(moves, new MoveVector(x + i, y + 1, 6));
+                    if (y + 1 < 8) {
+                        if (board[x + i][y + 1].getPiece() == null) moves = MoveVector.addVector(moves, new MoveVector(x + i, y + 1, 6));
                     }
                 }
             }
         }
-        else if(x + i == 7 || x + i == 0)  moves = MoveVector.addVector(moves, new MoveVector(x+i, y, 7));
+        else if((x + i == 7 || x + i == 0) && board[x+i][y].getPiece()==null)  moves = MoveVector.addVector(moves, new MoveVector(x+i, y, 7));
         return moves;
     }
 

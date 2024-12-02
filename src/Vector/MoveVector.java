@@ -15,8 +15,7 @@ public class MoveVector extends Vector{
     public static MoveVector[] addVector(MoveVector[] moves, MoveVector vector) {
         MoveVector[] temp = new MoveVector[moves.length + 1];
         System.arraycopy(moves, 0, temp, 0, moves.length);
-        temp[temp.length - 1] = vector;
-        return temp;
+        temp[temp.length - 1] = vector;return temp;
     }
 
     public static boolean contains(MoveVector[] moves, int x, int y) {
