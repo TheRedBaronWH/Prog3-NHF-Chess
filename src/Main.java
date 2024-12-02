@@ -21,18 +21,6 @@ public class Main {
         UI ui = new UI(board);
         ui.setVisible(true);
 
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
-        String[] cmd = line.split(" ");
-        int i = Integer.parseInt(cmd[0]);
-        int j = Integer.parseInt(cmd[1]);
-        line = scanner.nextLine();
-        cmd = line.split(" ");
-        int x = Integer.parseInt(cmd[0]);
-        int y = Integer.parseInt(cmd[1]);
-        Board.movePiece(board, board[i][j].getPiece(), x, y);
-        ui.UpdateUI(board);
-
         /*
         while(!gameEnd){
             String line = scanner.nextLine();

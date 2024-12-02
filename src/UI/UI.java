@@ -44,11 +44,15 @@ public class UI extends JFrame {
         add(chessBoard, BorderLayout.WEST);
     }
 
-    public void UpdateUI(Board[][] board){
+    public static void UpdateUI(Board[][] board){
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
+                if ((i+j)%2==0) buttons[i][j].setBackground(Color.WHITE);
+                else buttons[i][j].setBackground(Color.BLACK);
+                buttons[i][j].setCanMoveTo(false, 0, 0);
                 if(board[i][j].getPiece()!=null){
                     buttons[i][j].setIcon(board[i][j].getPiece().getIcon());
+                    buttons[i][j].setPoz(i, j);
                     buttons[i][j].setHasPiece(true);
                 }
                 else {
@@ -59,16 +63,26 @@ public class UI extends JFrame {
         }
     }
 
-    public static void UpdateUI(MoveVector[] moves){
+    public static void UpdateUI(MoveVector[] moves, int x, int y){
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 if(MoveVector.contains(moves, i, j)) {
+                    buttons[i][j].setCanMoveTo(true, x ,y);
                     if(buttons[i][j].getHasPiece()){
-                        buttons[i][j].setBackground(Color.RED);
+                        if(board[i][j].getPiece().isWhite()==board[x][y].getPiece().isWhite()){
+                            buttons[i][j].setBackground(Color.GREEN);
+                        }
+                        else buttons[i][j].setBackground(Color.RED);
                     }
-                    else buttons[i][j].setBackground(Color.YELLOW);
+                    else {
+                        if(MoveVector.moveType(moves, i, j) == 5 || MoveVector.moveType(moves, i, j) == 6){
+                            buttons[i][j].setBackground(Color.RED);
+                        }
+                        else buttons[i][j].setBackground(Color.YELLOW);
+                    }
                 }
                 else{
+                    buttons[i][j].setCanMoveTo(false, 0, 0);
                     if ((i+j)%2==0) buttons[i][j].setBackground(Color.WHITE);
                     else buttons[i][j].setBackground(Color.BLACK);
                 }
