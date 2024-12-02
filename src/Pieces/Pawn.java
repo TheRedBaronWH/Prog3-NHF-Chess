@@ -28,7 +28,7 @@ public class Pawn extends Piece {
     public MoveVector[] addMoveSingle(Board[][] board, MoveVector[] moves, int x, int y) {
         int i = 1;
         if (isWhite()) i = -1;
-        if (x + i < 7) {
+        if (x + i < 7 && x + i > 0) {
             if (board[x + i][y].getPiece() == null) {
                 if (doubleStep) doubleStep = false;
                 moves = MoveVector.addVector(moves, new MoveVector(x + i, y, 1));
@@ -52,7 +52,7 @@ public class Pawn extends Piece {
                 }
             }
         }
-        else if(x+i==7)  change();
+        else if(x + i == 7 || x + i == 0)  moves = MoveVector.addVector(moves, new MoveVector(x+i, y, 7));
         return moves;
     }
 
@@ -60,7 +60,4 @@ public class Pawn extends Piece {
         if(isWhite()) return "P";
         else return "p";
     }
-
-    //to be implemented
-    public void change(){}
 }

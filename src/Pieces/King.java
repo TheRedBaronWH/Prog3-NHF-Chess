@@ -11,16 +11,18 @@ public class King extends Piece{
     }
 
     public MoveVector[] sanc(Board[][] board, MoveVector[] moves, int x, int y){
+        boolean good;
         if(!hasMoved()){
+            good = true;
             for(int i=1; i<4; i++){
-                if(board[x][i].getPiece()!=null) return moves;
+                if(board[x][i].getPiece()!=null) good = false;
             }
+            if(good && !board[x][0].getPiece().hasMoved()) moves = addMoveSingle(board, moves, x, 0, true);
+            good = true;
             for(int i=5; i<7; i++){
-                if(board[x][i].getPiece()!=null) return moves;
+                if(board[x][i].getPiece()!=null) good = false;
             }
-            if(!board[x][0].getPiece().hasMoved()) moves = addMoveSingle(board, moves, x, 0, true);
-            if(!board[x][7].getPiece().hasMoved()) moves = addMoveSingle(board, moves, x, 7, true);
-            return moves;
+            if(good && !board[x][7].getPiece().hasMoved()) moves = addMoveSingle(board, moves, x, 7, true);
         }
         return moves;
     }
@@ -37,7 +39,7 @@ public class King extends Piece{
         if(x+1<=7 && y-1>=0) moves = addMoveSingle(board, moves, x + 1, y - 1);
         if(y-1>=0) moves = addMoveSingle(board, moves, x, y - 1);
         if(x-1>=0 && y-1>=0) moves = addMoveSingle(board, moves, x - 1, y - 1);
-        moves = sanc(board, moves, x, y);
+        if(!hasMoved()) moves = sanc(board, moves, x, y);
         return moves;
     }
 

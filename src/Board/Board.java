@@ -24,24 +24,64 @@ public class Board {
         this.piece = piece;
     }
 
+    public static Piece switchPiece(Piece piece, String newPiece){
+        if(newPiece.equals("Q")){
+            piece = new Queen(piece.getPoz(), true);
+        }
+        if(newPiece.equals("q")){
+            piece = new Queen(piece.getPoz(), false);
+        }
+        if(newPiece.equals("B")){
+            piece = new Bishop(piece.getPoz(), true);
+        }
+        if(newPiece.equals("b")){
+            piece = new Bishop(piece.getPoz(), false);
+        }
+        if(newPiece.equals("N")){
+            piece = new Knight(piece.getPoz(), true);
+        }
+        if(newPiece.equals("n")){
+            piece = new Knight(piece.getPoz(), false);
+        }
+        if(newPiece.equals("R")){
+            piece = new Rook(piece.getPoz(), true);
+        }
+        if(newPiece.equals("r")){
+            piece = new Rook(piece.getPoz(), false);
+        }
+        return piece;
+    }
+
     public static int movePiece(Board[][] board, Piece piece, int x, int y) {
         int i = 0;
+        Piece temp = null;
         MoveVector[] moves = piece.availableMoves(board);
         if(MoveVector.contains(moves, x, y)) {
             i = 1;
             piece.setHasMoved();
             switch(MoveVector.moveType(moves, x, y)) {
+                //Pawn csere
+                case 7 -> {
+                    String newPiece = "Q";
+                    piece = switchPiece(piece, newPiece);
+                }
                 //EnPassant jobbra
                 case 6 -> {
-
+                    if(board[x][y-1].getPiece().isWhite()) i = 2;
+                    else i = 3;
+                    board[x][y-1].setPiece(null);
                 }
                 //EnPassant balra
                 case 5 -> {
-
+                    if(board[x][y+1].getPiece().isWhite()) i = 2;
+                    else i = 3;
+                    board[x][y+1].setPiece(null);
                 }
                 //sanc
                 case 4 -> {
-
+                    temp = board[x][y].getPiece();
+                    temp.setPoz(new Vector(piece.getPoz().getX(), piece.getPoz().getY()));
+                    temp.setHasMoved();
                 }
                 //király leszedés
                 case 3 -> {
@@ -51,11 +91,11 @@ public class Board {
                 }
                 //normális leszedés
                 case 2 -> {
-                    if(board[x][y].getPiece().isWhite()) i=2;
+                    if(board[x][y].getPiece().isWhite()) i = 2;
                     else i = 3;
                 }
             }
-            board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(null);
+            board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(temp);
             piece.setPoz(new Vector(x, y));
             board[x][y].setPiece(piece);
             System.out.println(MoveVector.moveType(moves, x, y));

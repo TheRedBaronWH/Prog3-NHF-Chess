@@ -2,6 +2,7 @@ import Board.*;
 import Vector.*;
 import Pieces.*;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
@@ -19,6 +20,10 @@ public class Main {
         Board.setBoard(board);
         Board.printBoard(board);
 
+        UI ui = new UI();
+        ui.setVisible(true);
+
+        /*
         Scanner scanner = new Scanner(System.in);
         MoveVector[] moves;
 
@@ -72,6 +77,6 @@ public class Main {
             }
         }
         if(winner == 2) System.out.println("Congratulations, black won!");
-        else System.out.println("Congratulations, white won!");
+        else System.out.println("Congratulations, white won!");*/
     }
 }

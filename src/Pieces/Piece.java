@@ -37,7 +37,8 @@ public abstract class Piece {
                 else moves = MoveVector.addVector(moves, new MoveVector(x, y, 2));
             }
             else{
-                if(board[x][y].getPiece().getType().equals("K") && this.getType().equals("R") ||
+                if((!board[x][y].getPiece().hasMoved() && !this.hasMoved()) &&
+                        board[x][y].getPiece().getType().equals("K") && this.getType().equals("R") ||
                         board[x][y].getPiece().getType().equals("k") && this.getType().equals("r") ||
                         board[x][y].getPiece().getType().equals("R") && this.getType().equals("K") ||
                         board[x][y].getPiece().getType().equals("r") && this.getType().equals("k")
