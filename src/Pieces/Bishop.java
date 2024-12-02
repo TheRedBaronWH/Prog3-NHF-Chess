@@ -3,11 +3,15 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
+import javax.swing.*;
+
 public class Bishop extends Piece {
     public Bishop(Vector poz, boolean white){
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        if(white) setIcon(new ImageIcon("src/Icons/WBishop.png"));
+        else setIcon(new ImageIcon("src/Icons/BBishop.png"));
     }
 
     public MoveVector[] availableMoves(Board[][] board){

@@ -3,11 +3,15 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
+import javax.swing.*;
+
 public class Knight extends Piece{
     public Knight(Vector poz, boolean white){
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        if(white) setIcon(new ImageIcon("src/Icons/WKnight.png"));
+        else setIcon(new ImageIcon("src/Icons/BKnight.png"));
     }
 
     public MoveVector[] availableMoves(Board[][] board){

@@ -3,11 +3,15 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
+import javax.swing.*;
+
 public class Rook extends Piece {
     public Rook(Vector poz, boolean white){
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        if(white) setIcon(new ImageIcon("src/Icons/WRook.png"));
+        else setIcon(new ImageIcon("src/Icons/BRook.png"));
     }
 
     public MoveVector[] sanc(Board[][] board, MoveVector[] moves, int x, int y){

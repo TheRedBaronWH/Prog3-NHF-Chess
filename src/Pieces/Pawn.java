@@ -3,6 +3,8 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
+import javax.swing.*;
+
 public class Pawn extends Piece {
     private boolean doubleStep = false;
 
@@ -10,6 +12,8 @@ public class Pawn extends Piece {
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        if(white) setIcon(new ImageIcon("src/Icons/WPawn.png"));
+        else setIcon(new ImageIcon("src/Icons/BPawn.png"));
     }
 
     @Override

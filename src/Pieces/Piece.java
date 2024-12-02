@@ -3,10 +3,13 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
+import javax.swing.*;
+
 public abstract class Piece {
     protected Vector poz;
     protected boolean white;
     protected boolean hasmoved;
+    protected ImageIcon icon;
 
     public void setWhite(boolean white){
         this.white = white;
@@ -18,6 +21,8 @@ public abstract class Piece {
 
     public void setHasMoved(){ this.hasmoved = true; }
 
+    public void setIcon(ImageIcon icon){ this.icon = icon; }
+
     public boolean isWhite(){
         return white;
     }
@@ -27,6 +32,8 @@ public abstract class Piece {
     }
 
     public boolean hasMoved() { return hasmoved; }
+
+    public ImageIcon getIcon() { return icon; }
 
     public MoveVector[] addMove(Board[][] board, MoveVector[] moves, int x, int y, Boolean[] stop, int i){
         if(board[x][y].getPiece()!=null){

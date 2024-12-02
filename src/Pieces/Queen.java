@@ -3,11 +3,15 @@ package Pieces;
 import Vector.*;
 import Board.*;
 
+import javax.swing.*;
+
 public class Queen extends Piece {
     public Queen(Vector poz, boolean white){
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        if(white) setIcon(new ImageIcon("src/Icons/WQueen.png"));
+        else setIcon(new ImageIcon("src/Icons/BQueen.png"));
     }
 
     public MoveVector[] availableMoves(Board[][] board){
