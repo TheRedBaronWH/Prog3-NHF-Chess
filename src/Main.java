@@ -1,8 +1,6 @@
 import Board.*;
-import Vector.*;
-import Pieces.*;
+import UI.*;
 
-import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
