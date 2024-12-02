@@ -227,6 +227,7 @@ public class Board {
             if(len!=0) code = code.concat(String.valueOf(len));
             if(i!=7) code = code.concat("/");
         }
+        System.out.println(code);
         return code;
     }
 }
