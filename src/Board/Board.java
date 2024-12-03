@@ -31,94 +31,80 @@ public class Board {
         this.piece = piece;
     }
 
-    public static Piece switchPiece(Piece piece, String newPiece){
-        if(piece.isWhite()) {
-            System.out.println("in");
-            if (newPiece.equals("Queen")) {
-                piece = new Queen(piece.getPoz(), true);
-            }
-            if (newPiece.equals("Bishop")) {
-                piece = new Bishop(piece.getPoz(), true);
-            }
-            if (newPiece.equals("Knight")) {
-                piece = new Knight(piece.getPoz(), true);
-            }
-            if (newPiece.equals("Rook")) {
-                piece = new Rook(piece.getPoz(), true);
-            }
-        }
-        else {
-            System.out.println("in");
-            if (newPiece.equals("Queen")) {
-                piece = new Queen(piece.getPoz(), false);
-            }
-            if (newPiece.equals("Bishop")) {
-                piece = new Bishop(piece.getPoz(), false);
-            }
-            if (newPiece.equals("Knight")) {
-                piece = new Knight(piece.getPoz(), false);
-            }
-            if (newPiece.equals("Rook")) {
-                piece = new Rook(piece.getPoz(), false);
-            }
+    public static Piece checkPawnEnd(Board[][] board, Piece piece, int x, int y) {
+        if((piece.getType().equals("p") && x==7) || (piece.getType().equals("P") && x==0)){
+            PieceSelector selector = new PieceSelector(piece.isWhite(), piece.getPoz());
+            selector.setVisible(true);
+            piece = selector.getPiece();
+            selector.dispose();
+            UI.UpdateUI(board);
         }
         return piece;
     }
 
     public static int movePiece(Board[][] board, Piece piece, int x, int y) {
         int i = 0;
-        Piece temp = null;
-        MoveVector[] moves = piece.availableMoves(board);
-        if(MoveVector.contains(moves, x, y)) {
-            i = 1;
-            piece.setHasMoved();
-            switch(MoveVector.moveType(moves, x, y)) {
-                //Pawn csere
-                case 7 -> {
-                    PieceSelector selector = new PieceSelector(piece);
-                    selector.setVisible(true);
+        if(piece.isWhite()==UI.getWhiteTurn()) {
+            Piece temp = null;
+            MoveVector[] moves = piece.availableMoves(board);
+            if (MoveVector.contains(moves, x, y)) {
+                i = 1;
+                piece.setHasMoved();
+                switch (MoveVector.moveType(moves, x, y)) {
+                    //Pawn csere
+                    case 7 -> {
+                        PieceSelector selector = new PieceSelector(piece.isWhite(), piece.getPoz());
+                        selector.setVisible(true);
+                        piece = selector.getPiece();
+                        selector.dispose();
+                        UI.UpdateUI(board);
+                    }
+                    //EnPassant jobbra
+                    case 6 -> {
+                        if (board[x][y - 1].getPiece().isWhite()) i = 2;
+                        else i = 3;
+                        if (i == 2) UI.BUpdatePieces(board[x][y - 1].getPiece());
+                        else UI.WUpdatePieces(board[x][y - 1].getPiece());
+                        board[x][y - 1].setPiece(null);
+                    }
+                    //EnPassant balra
+                    case 5 -> {
+                        if (board[x][y + 1].getPiece().isWhite()) i = 2;
+                        else i = 3;
+                        if (i == 2) UI.BUpdatePieces(board[x][y + 1].getPiece());
+                        else UI.WUpdatePieces(board[x][y + 1].getPiece());
+                        board[x][y + 1].setPiece(null);
+                    }
+                    //sanc
+                    case 4 -> {
+                        temp = board[x][y].getPiece();
+                        temp.setPoz(new Vector(piece.getPoz().getX(), piece.getPoz().getY()));
+                        temp.setHasMoved();
+                    }
+                    //király leszedés
+                    case 3 -> {
+                        if (board[x][y].getPiece().getType().equals("K")) {
+                            UI.endScreen("Black");
+                        } else UI.endScreen("White");
+                        UI.shutDown();
+                    }
+                    //normális leszedés
+                    case 2 -> {
+                        if (board[x][y].getPiece().isWhite()) i = 2;
+                        else i = 3;
+                        piece = checkPawnEnd(board, piece, x, y);
+                        if (i == 2) UI.BUpdatePieces(board[x][y].getPiece());
+                        else UI.WUpdatePieces(board[x][y].getPiece());
+                    }
                 }
-                //EnPassant jobbra
-                case 6 -> {
-                    if(board[x][y-1].getPiece().isWhite()) i = 2;
-                    else i = 3;
-                    if(i==2) UI.BUpdatePieces(board[x][y-1].getPiece());
-                    else UI.WUpdatePieces(board[x][y-1].getPiece());
-                    board[x][y-1].setPiece(null);
-                }
-                //EnPassant balra
-                case 5 -> {
-                    if(board[x][y+1].getPiece().isWhite()) i = 2;
-                    else i = 3;
-                    if(i==2) UI.BUpdatePieces(board[x][y+1].getPiece());
-                    else UI.WUpdatePieces(board[x][y+1].getPiece());
-                    board[x][y+1].setPiece(null);
-                }
-                //sanc
-                case 4 -> {
-                    temp = board[x][y].getPiece();
-                    temp.setPoz(new Vector(piece.getPoz().getX(), piece.getPoz().getY()));
-                    temp.setHasMoved();
-                }
-                //király leszedés
-                case 3 -> {
-                    if (piece.getType().equals("K")) {
-                        i = 4;
-                    } else i = 5;
-                }
-                //normális leszedés
-                case 2 -> {
-                    if(board[x][y].getPiece().isWhite()) i = 2;
-                    else i = 3;
-                    if(i==2) UI.BUpdatePieces(board[x][y].getPiece());
-                    else UI.WUpdatePieces(board[x][y].getPiece());
-                }
+                board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(temp);
+                piece.setPoz(new Vector(x, y));
+                board[x][y].setPiece(piece);
+                //System.out.println(MoveVector.moveType(moves, x, y));
+                UI.UpdateUI(board);
+                UI.changeTurn();
+                return i;
             }
-            board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(temp);
-            piece.setPoz(new Vector(x, y));
-            board[x][y].setPiece(piece);
-            System.out.println(MoveVector.moveType(moves, x, y));
-            return i;
         }
         return i;
     }
@@ -188,7 +174,7 @@ public class Board {
                     board[i][j] = new Board(new Vector(i, j));
                     if (skip == 0) {
                         if (code[count].equals("/")) count++;
-                        System.out.println(code[count] + " " + i + " " + j);
+                        //System.out.println(code[count] + " " + i + " " + j);
                         switch (code[count]) {
                             case "r" -> board[i][j].setPiece(new Rook(board[i][j].getPoz(), false));
                             case "R" -> board[i][j].setPiece(new Rook(board[i][j].getPoz(), true));
@@ -269,7 +255,7 @@ public class Board {
             if(len!=0) code = code.concat(String.valueOf(len));
             if(i!=7) code = code.concat("/");
         }
-        System.out.println(code);
+        //System.out.println(code);
         return code;
     }
 }

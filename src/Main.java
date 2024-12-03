@@ -3,18 +3,10 @@ import UI.*;
 
 public class Main {
     private static Board[][] board = new Board[8][8];
-    private static boolean KingDanger = false;
-    private static boolean gameEnd = false;
-    private static int winner;
-
-    public static void setGameEnd(int i){
-        gameEnd = true;
-        winner = i;
-    }
 
     public static void main(String[] args) {
         Board.setBoard(board);
-        Board.printBoard(board);
+        //Board.printBoard(board);
 
         MainMenu ui = new MainMenu(board);
         ui.setVisible(true);

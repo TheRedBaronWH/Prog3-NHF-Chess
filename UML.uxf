@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>60</y>
+      <w>460</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>Piece
+--
+#poz: Vector
+#white: boolean
+#hasmoved: boolean
+#icon: ImageIcon
+#value: int
+--
++setWhite(white: boolean)
++setPoz(Poz: Vector)
++setHasMoved()
++setIcon(icon: ImageIcon)
++isWhite(): boolean
++getPoz(): Vector
++getIcon(): ImageIcon
++getValue: int
++addMove(board, moves, x, y, stop[], i):MoveVector[]
++addMoveSingle(board, moves, x, y): MoveVector[]
++addMoveSingle(board, moves, x, y, bypass:boolean): MoveVector[]
+--
++wasDoubleStep(): boolean   \\not abstract, cuz only Pawn overwrites it
++getType(): abstact String   \\ezt a 3-at mindegyik felülirja, egyszerűség
++toString(): abstract String; \\kedvéért nem fogom odairni mindegyikhez
++availableMoves(): abstract MoveVector[] \\csak amelyik speciális</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>500</y>
+      <w>160</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Pawn
+--
+-doubleStep: boolean
+--
++Pawn(poz, white)
++addMoveSingle(board,
+    moves, x, y): 
+      MoveVector[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>30</y>
+      <w>730</w>
+      <h>600</h>
+    </coordinates>
+    <panel_attributes>lw=2
+Package: Pieces</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>500</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Rook
+--
+
+--
++Rook(poz, white)
++sanc(board, moves,
+    x, y): MoveVector[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>500</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Knight
+--
+
+--
++Knight(poz, white)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>340</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Bishop
+--
+
+--
++Bishop(poz, white)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>60</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>King
+--
+
+--
++King(poz, white)
++sanc(board, moves,
+    x, y): MoveVector[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>200</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Queen
+--
+
+--
++Queen(poz, white)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>670</x>
+      <y>100</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>670</x>
+      <y>240</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>670</x>
+      <y>380</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>470</x>
+      <y>430</y>
+      <w>30</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>430</y>
+      <w>130</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>430</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>940</x>
+      <y>30</y>
+      <w>320</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lw=2
+Package: Board</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>60</y>
+      <w>240</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>Board
+--
+- STRING: Set&lt;String&gt;
+#poz: Vector
+#piece: Piece
+--
++Board(poz)
++getPoz(): Vector
++getPiece(): Piece
++setPiece(piece)
++checkPawnEnd(board, piece, x, y)
++movePiece(board, piece, x, y): int
++setBoard(board): Board[][]
++loadBoardFile(board): Board[][]
++goodCode(code): boolean
++loadBoardCode(board, code): Board[][]
++printBoard(board)
++printMoves(moves):
++saveBoardCode(board): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>940</x>
+      <y>390</y>
+      <w>330</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>lw=2
+Package: Vector</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>420</y>
+      <w>290</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Vector
+--
+-x: int
+-y: int
+--
++getX(): int
++getY(): int
++addVector(moves: Vector[], vector): Vector[]
++copyVector(old: Vector[]): Vector[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>660</y>
+      <w>290</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>MoveVector
+--
+-takeable: int
+--
++MoveVector(x, y, takeable)
++getTakeable(): int
++addVector(moves: MoveVector[], vector: MoveVector): MoveVector[]
++contains(moves, x, y): boolean
++moveType(moves, x, y): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1090</x>
+      <y>600</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>660</y>
+      <w>730</w>
+      <h>450</h>
+    </coordinates>
+    <panel_attributes>lw=2
+Package: UI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>200</x>
+      <y>690</y>
+      <w>230</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>UI
+extends JFrame
+--
+-lots of Swing stuff for UI
+--
++endScreen(winner: String)
++shutDown()
++UI(board)
++WUpdatePieces(piece)
++BUpdatePieces(piece)
++UpdateUI(board)
++UpdateUI(moves, x, y)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>690</y>
+      <w>240</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>MainMenu
+extends JFrame
+--
+included logo, and 4 buttons
+--
++MainMenu(board)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>790</y>
+      <w>240</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Rules
+extends JFrame
+--
+included long textbox of rules 
+and OK button
+--
++Rules()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>710</x>
+      <y>690</y>
+      <w>180</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>SaveButton
+extends JButton
+--
++SaveButton(text)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>710</x>
+      <y>780</y>
+      <w>180</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>ForfeitButton
+extends JButton
+--
++ForfeitButton(text)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>900</y>
+      <w>350</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Button
+extends JButton
+--
+ButtonClickListener: class, implements ActionListener
+--
+hasPiece, canMoveTo: boolean
+i,j,x,y: int
++setHasPiece(hasPiece: boolean_
++setCanMoveTo(canMoveTo: boolean, x, y: int
++setPoz(i, j);
++getHasPiece(): boolean
++getCanMoveto(): boolean
++Button(i, j)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>900</y>
+      <w>330</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>PieceSelector
+extends JDialog
+--
+pieces: String[]
+piece: Piece
+isWhite: boolean
+poz: Vector
+--
+SelectorListener: class, implements ActionListener
+--
++PieceSelector(isWhite, poz)</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

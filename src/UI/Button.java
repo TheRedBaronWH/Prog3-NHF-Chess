@@ -31,7 +31,7 @@ public class Button extends JButton {
         public void actionPerformed(ActionEvent e) {
             Board[][] board = UI.getBoard();
             if(canMoveTo) {
-                System.out.println(x + " " + y);
+                //System.out.println(x + " " + y);
                 Board.movePiece(board, board[x][y].getPiece() , i, j);
                 UI.UpdateUI(board);
             }
