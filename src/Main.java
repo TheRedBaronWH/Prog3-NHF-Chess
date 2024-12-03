@@ -1,8 +1,6 @@
 import Board.*;
 import UI.*;
 
-import java.util.Scanner;
-
 public class Main {
     private static Board[][] board = new Board[8][8];
     private static boolean KingDanger = false;
@@ -18,7 +16,7 @@ public class Main {
         Board.setBoard(board);
         Board.printBoard(board);
 
-        UI ui = new UI(board);
+        MainMenu ui = new MainMenu(board);
         ui.setVisible(true);
 
         /*

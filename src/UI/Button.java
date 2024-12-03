@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Button extends JButton {
-    public static ActionListener ButtonClickedListener;
     boolean hasPiece;
     boolean canMoveTo;
     int i;

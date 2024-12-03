@@ -11,13 +11,16 @@ import Vector.MoveVector;
 public class UI extends JFrame {
     private static JPanel UI = new JPanel();
 
-    private static JPanel BPieceContainer = new JPanel();
+    private static JPanel BlackContainer = new JPanel();
+    private static ForfeitButton BlackForfeit = new ForfeitButton("Forfeit", false);
     private static JTextArea BtextArea = new JTextArea();
 
-    private static JPanel WPieceContainer = new JPanel();
+    private static JPanel WhiteContainer = new JPanel();
+    private static ForfeitButton WhiteForfeit = new ForfeitButton("Forfeit", true);
     private static JTextArea WtextArea = new JTextArea();
 
-    private static JButton saveButton = new JButton("Save");
+    private static JPanel MiddleContainer = new JPanel();
+    private static SaveButton saveButton = new SaveButton("Save");
 
     private static JPanel chessBoard = new JPanel();
     private static Button[][] buttons = new Button[8][8];
@@ -35,6 +38,7 @@ public class UI extends JFrame {
         setSize(1200, 800);
         setResizable(false);
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
 
         BorderLayout UIlayout = new BorderLayout();
         UI.setLayout(UIlayout);
@@ -42,14 +46,21 @@ public class UI extends JFrame {
 
         BtextArea.setPreferredSize(new Dimension(375, 200));
         BtextArea.setEditable(false);
-        BPieceContainer.add(BtextArea);
-        UI.add(BPieceContainer, BorderLayout.NORTH);
+        BlackContainer.setLayout(new BorderLayout());
+        BlackContainer.add(BtextArea, BorderLayout.NORTH);
+        BlackForfeit.setBackground(Color.RED);
+        BlackContainer.add(BlackForfeit, BorderLayout.SOUTH);
+        UI.add(BlackContainer, BorderLayout.NORTH);
 
         WtextArea.setPreferredSize(new Dimension(375, 200));
         WtextArea.setEditable(false);
-        WPieceContainer.add(WtextArea);
-        UI.add(WPieceContainer, BorderLayout.SOUTH);
+        WhiteContainer.setLayout(new BorderLayout());
+        WhiteContainer.add(WtextArea, BorderLayout.SOUTH);
+        WhiteForfeit.setBackground(Color.RED);
+        WhiteContainer.add(WhiteForfeit, BorderLayout.NORTH);
+        UI.add(WhiteContainer, BorderLayout.SOUTH);
 
+        MiddleContainer.setLayout(new BorderLayout());
         saveButton.addActionListener(new ActionListener() {
 
             @Override
@@ -57,7 +68,9 @@ public class UI extends JFrame {
                 Board.saveBoardCode(board);
             }
         });
-        UI.add(saveButton, BorderLayout.EAST);
+        saveButton.setBackground(Color.GREEN);
+        MiddleContainer.add(saveButton, BorderLayout.NORTH);
+        UI.add(MiddleContainer, BorderLayout.CENTER);
 
         GridLayout layout = new GridLayout(8,8);
         chessBoard.setLayout(layout);

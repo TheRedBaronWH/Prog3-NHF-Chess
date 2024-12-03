@@ -3,6 +3,10 @@ package Board;
 import Pieces.*;
 import Vector.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Board {
     protected Vector poz;
     protected Piece piece;
@@ -138,6 +142,17 @@ public class Board {
         }
     }
 
+    public static Board[][] loadBoardFile(Board[][] board){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("BoardCode.txt"));
+            String code = br.readLine();
+            return loadBoardCode(board, code);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Board[][] loadBoardCode(Board[][] board, String c){
         int skip = 0;
         int count = 0;
@@ -196,8 +211,8 @@ public class Board {
                 board[i][j]=0;
             }
         }
-        for(int i=0; i<moves.length; i++){
-            board[moves[i].getX()][moves[i].getY()] = moves[i].getTakeable();
+        for (MoveVector move : moves) {
+            board[move.getX()][move.getY()] = move.getTakeable();
         }
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
