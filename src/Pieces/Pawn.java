@@ -12,6 +12,7 @@ public class Pawn extends Piece {
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        value = 1;
         if(white) setIcon(new ImageIcon("src/Icons/WPawn.png"));
         else setIcon(new ImageIcon("src/Icons/BPawn.png"));
     }
@@ -63,5 +64,9 @@ public class Pawn extends Piece {
     public String getType(){
         if(isWhite()) return "P";
         else return "p";
+    }
+
+    public String toString(){
+        return "Pawn";
     }
 }

@@ -19,10 +19,16 @@ public class MainMenu extends JFrame {
         panel.setLayout(new BorderLayout());
 
         ImageIcon logo = new ImageIcon("src/Icons/BKing.png");
+        JPanel logoPanel = new JPanel();
+        logoPanel.setLayout(new BorderLayout());
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        logoLabel.setSize(new Dimension(350,350));
-        logoLabel.setBorder(BorderFactory.createEmptyBorder(50,10,50,10));
+        //logoLabel.setSize(new Dimension(350,350));
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(50,10,0,10));
+        JLabel titleLabel = new JLabel("ChessGame", SwingConstants.CENTER);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0,0,25,0));
+        logoPanel.add(logoLabel, BorderLayout.CENTER);
+        logoPanel.add(titleLabel, BorderLayout.SOUTH);
 
         JPanel Buttons = new JPanel();
         Buttons.setLayout(new GridLayout(5, 1, 30, 30));
@@ -46,15 +52,21 @@ public class MainMenu extends JFrame {
         });
         Buttons.add(LoadGameFileButton);
 
+        JPanel LoadGameCode = new JPanel();
+        LoadGameCode.setLayout(new BorderLayout());
+        JTextField codeReader = new JTextField(100);
         JButton LoadGameCodeButton = new JButton("Load Game from code");
         LoadGameCodeButton.setBackground(Color.GREEN);
         LoadGameCodeButton.addActionListener(e -> {
-            //Board.loadBoardCode(board, code);
-            UI.UpdateUI(board);
-            ui.setVisible(true);
-            dispose();
+            if(Board.loadBoardCode(board, codeReader.getText())!=null) {
+                UI.UpdateUI(board);
+                ui.setVisible(true);
+                dispose();
+            }
         });
-        Buttons.add(LoadGameCodeButton);
+        LoadGameCode.add(codeReader, BorderLayout.NORTH);
+        LoadGameCode.add(LoadGameCodeButton, BorderLayout.CENTER);
+        Buttons.add(LoadGameCode);
 
         JButton RulesButton = new JButton("Rules");
         RulesButton.setBackground(Color.YELLOW);
@@ -70,7 +82,7 @@ public class MainMenu extends JFrame {
         });
         Buttons.add(ExitButton);
 
-        panel.add(logoLabel, BorderLayout.NORTH);
+        panel.add(logoPanel, BorderLayout.NORTH);
         panel.add(Buttons, BorderLayout.CENTER);
         add(panel, BorderLayout.CENTER);
     }

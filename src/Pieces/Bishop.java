@@ -10,6 +10,7 @@ public class Bishop extends Piece {
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        value = 3;
         if(white) setIcon(new ImageIcon("src/Icons/WBishop.png"));
         else setIcon(new ImageIcon("src/Icons/BBishop.png"));
     }
@@ -38,5 +39,9 @@ public class Bishop extends Piece {
     public String getType() {
         if(isWhite()) return "B";
         else return "b";
+    }
+
+    public String toString(){
+        return "Bishop";
     }
 }

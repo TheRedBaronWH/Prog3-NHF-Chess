@@ -10,6 +10,7 @@ public class Queen extends Piece {
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        value = 9;
         if(white) setIcon(new ImageIcon("src/Icons/WQueen.png"));
         else setIcon(new ImageIcon("src/Icons/BQueen.png"));
     }
@@ -46,5 +47,9 @@ public class Queen extends Piece {
     public String getType() {
         if(isWhite()) return "Q";
         else return "q";
+    }
+
+    public String toString(){
+        return "Queen";
     }
 }

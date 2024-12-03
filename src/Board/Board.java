@@ -1,13 +1,16 @@
 package Board;
 
+import UI.*;
 import Pieces.*;
 import Vector.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Set;
 
 public class Board {
+    private static final Set<String> STRINGS = Set.of("r", "R", "b", "B", "n", "N", "k", "K", "q", "Q", "p", "P");
     protected Vector poz;
     protected Piece piece;
 
@@ -73,12 +76,16 @@ public class Board {
                 case 6 -> {
                     if(board[x][y-1].getPiece().isWhite()) i = 2;
                     else i = 3;
+                    if(i==2) UI.BUpdatePieces(board[x][y-1].getPiece());
+                    else UI.WUpdatePieces(board[x][y-1].getPiece());
                     board[x][y-1].setPiece(null);
                 }
                 //EnPassant balra
                 case 5 -> {
                     if(board[x][y+1].getPiece().isWhite()) i = 2;
                     else i = 3;
+                    if(i==2) UI.BUpdatePieces(board[x][y+1].getPiece());
+                    else UI.WUpdatePieces(board[x][y+1].getPiece());
                     board[x][y+1].setPiece(null);
                 }
                 //sanc
@@ -97,6 +104,8 @@ public class Board {
                 case 2 -> {
                     if(board[x][y].getPiece().isWhite()) i = 2;
                     else i = 3;
+                    if(i==2) UI.BUpdatePieces(board[x][y].getPiece());
+                    else UI.WUpdatePieces(board[x][y].getPiece());
                 }
             }
             board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(temp);
@@ -153,42 +162,54 @@ public class Board {
         }
     }
 
+    public static boolean goodCode(String[] code){
+        int n = 0;
+        for(int i=0; i<code.length; i++){
+            if(STRINGS.contains(code[i])) n++;
+            if(Character.isDigit(code[i].charAt(0))) n+=Character.getNumericValue(code[i].charAt(0));
+        }
+        if(n == 64) return true;
+        else return false;
+    }
+
     public static Board[][] loadBoardCode(Board[][] board, String c){
         int skip = 0;
         int count = 0;
         String[] code = c.split("");
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                board[i][j] = new Board(new Vector(i, j));
-                if(skip==0){
-                    if(code[count].equals("/")) count++;
-                    System.out.println(code[count] + " " + i + " " + j);
-                    switch(code[count]) {
-                        case "r" -> board[i][j].setPiece(new Rook(board[i][j].getPoz(), false));
-                        case "R" -> board[i][j].setPiece(new Rook(board[i][j].getPoz(), true));
-                        case "n" -> board[i][j].setPiece(new Knight(board[i][j].getPoz(), false));
-                        case "N" -> board[i][j].setPiece(new Knight(board[i][j].getPoz(), true));
-                        case "b" -> board[i][j].setPiece(new Bishop(board[i][j].getPoz(), false));
-                        case "B" -> board[i][j].setPiece(new Bishop(board[i][j].getPoz(), true));
-                        case "q" -> board[i][j].setPiece(new Queen(board[i][j].getPoz(), false));
-                        case "Q" -> board[i][j].setPiece(new Queen(board[i][j].getPoz(), true));
-                        case "k" -> board[i][j].setPiece(new King(board[i][j].getPoz(), false));
-                        case "K" -> board[i][j].setPiece(new King(board[i][j].getPoz(), true));
-                        case "p" -> board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
-                        case "P" -> board[i][j].setPiece(new Pawn(board[i][j].getPoz(), true));
-                        default -> {
-                            skip = Integer.parseInt(code[count]) - 1;
-                            board[i][j].setPiece(null);
+        if(goodCode(code)) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    board[i][j] = new Board(new Vector(i, j));
+                    if (skip == 0) {
+                        if (code[count].equals("/")) count++;
+                        System.out.println(code[count] + " " + i + " " + j);
+                        switch (code[count]) {
+                            case "r" -> board[i][j].setPiece(new Rook(board[i][j].getPoz(), false));
+                            case "R" -> board[i][j].setPiece(new Rook(board[i][j].getPoz(), true));
+                            case "n" -> board[i][j].setPiece(new Knight(board[i][j].getPoz(), false));
+                            case "N" -> board[i][j].setPiece(new Knight(board[i][j].getPoz(), true));
+                            case "b" -> board[i][j].setPiece(new Bishop(board[i][j].getPoz(), false));
+                            case "B" -> board[i][j].setPiece(new Bishop(board[i][j].getPoz(), true));
+                            case "q" -> board[i][j].setPiece(new Queen(board[i][j].getPoz(), false));
+                            case "Q" -> board[i][j].setPiece(new Queen(board[i][j].getPoz(), true));
+                            case "k" -> board[i][j].setPiece(new King(board[i][j].getPoz(), false));
+                            case "K" -> board[i][j].setPiece(new King(board[i][j].getPoz(), true));
+                            case "p" -> board[i][j].setPiece(new Pawn(board[i][j].getPoz(), false));
+                            case "P" -> board[i][j].setPiece(new Pawn(board[i][j].getPoz(), true));
+                            default -> {
+                                skip = Integer.parseInt(code[count]) - 1;
+                                board[i][j].setPiece(null);
+                            }
                         }
+                        count++;
+                    } else {
+                        skip--;
                     }
-                    count++;
-                }
-                else{
-                    skip--;
                 }
             }
+            return board;
         }
-        return board;
+        else return null;
     }
 
     public static void printBoard(Board[][] board){

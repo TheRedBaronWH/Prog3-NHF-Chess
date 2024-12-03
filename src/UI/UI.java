@@ -2,10 +2,9 @@ package UI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import Board.*;
+import Pieces.*;
 import Vector.MoveVector;
 
 public class UI extends JFrame {
@@ -14,10 +13,12 @@ public class UI extends JFrame {
     private static JPanel BlackContainer = new JPanel();
     private static ForfeitButton BlackForfeit = new ForfeitButton("Forfeit", false);
     private static JTextArea BtextArea = new JTextArea();
+    private static JTextArea BScore = new JTextArea("0");
 
     private static JPanel WhiteContainer = new JPanel();
     private static ForfeitButton WhiteForfeit = new ForfeitButton("Forfeit", true);
     private static JTextArea WtextArea = new JTextArea();
+    private static JTextArea WScore = new JTextArea("0");
 
     private static JPanel MiddleContainer = new JPanel();
     private static SaveButton saveButton = new SaveButton("Save");
@@ -44,32 +45,32 @@ public class UI extends JFrame {
         UI.setLayout(UIlayout);
         //UI.setPreferredSize(new Dimension(400, 800));
 
-        BtextArea.setPreferredSize(new Dimension(375, 200));
+        BScore.setEditable(false);
+        BScore.setPreferredSize(new Dimension(375, 20));
+        BtextArea.setPreferredSize(new Dimension(375, 180));
         BtextArea.setEditable(false);
         BlackContainer.setLayout(new BorderLayout());
-        BlackContainer.add(BtextArea, BorderLayout.NORTH);
+        BlackContainer.add(BScore, BorderLayout.NORTH);
+        BlackContainer.add(BtextArea, BorderLayout.CENTER);
         BlackForfeit.setBackground(Color.RED);
         BlackContainer.add(BlackForfeit, BorderLayout.SOUTH);
         UI.add(BlackContainer, BorderLayout.NORTH);
 
-        WtextArea.setPreferredSize(new Dimension(375, 200));
+        WScore.setEditable(false);
+        WScore.setPreferredSize(new Dimension(375, 20));
+        WtextArea.setPreferredSize(new Dimension(375, 180));
         WtextArea.setEditable(false);
         WhiteContainer.setLayout(new BorderLayout());
-        WhiteContainer.add(WtextArea, BorderLayout.SOUTH);
+        WhiteContainer.add(WScore, BorderLayout.SOUTH);
+        WhiteContainer.add(WtextArea, BorderLayout.CENTER);
         WhiteForfeit.setBackground(Color.RED);
         WhiteContainer.add(WhiteForfeit, BorderLayout.NORTH);
         UI.add(WhiteContainer, BorderLayout.SOUTH);
 
         MiddleContainer.setLayout(new BorderLayout());
-        saveButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Board.saveBoardCode(board);
-            }
-        });
+        saveButton.addActionListener(e -> Board.saveBoardCode(board));
         saveButton.setBackground(Color.GREEN);
-        MiddleContainer.add(saveButton, BorderLayout.NORTH);
+        MiddleContainer.add(saveButton, BorderLayout.CENTER);
         UI.add(MiddleContainer, BorderLayout.CENTER);
 
         GridLayout layout = new GridLayout(8,8);
@@ -91,6 +92,16 @@ public class UI extends JFrame {
         }
         add(chessBoard, BorderLayout.WEST);
         add(UI, BorderLayout.EAST);
+    }
+
+    public static void WUpdatePieces(Piece piece){
+        WScore.setText(String.valueOf(Integer.parseInt(WScore.getText())+piece.getValue()));
+        WtextArea.setText(piece.toString()+ " +" + piece.getValue() + "\n"+WtextArea.getText());
+    }
+
+    public static void BUpdatePieces(Piece piece){
+        BScore.setText(String.valueOf(Integer.parseInt(BScore.getText())+piece.getValue()));
+        BtextArea.setText(piece.toString()+ " +" + piece.getValue() + "\n"+BtextArea.getText());
     }
 
     public static void UpdateUI(Board[][] board){

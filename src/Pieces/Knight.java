@@ -10,6 +10,7 @@ public class Knight extends Piece{
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        value = 3;
         if(white) setIcon(new ImageIcon("src/Icons/WKnight.png"));
         else setIcon(new ImageIcon("src/Icons/BKnight.png"));
     }
@@ -32,5 +33,9 @@ public class Knight extends Piece{
     public String getType() {
         if(isWhite()) return "N";
         else return "n";
+    }
+
+    public String toString(){
+        return "Knight";
     }
 }

@@ -51,4 +51,8 @@ public class King extends Piece{
         if(isWhite()) return "K";
         else return "k";
     }
+
+    public String toString(){
+        return "King";
+    }
 }

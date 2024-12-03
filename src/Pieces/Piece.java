@@ -10,6 +10,7 @@ public abstract class Piece {
     protected boolean white;
     protected boolean hasmoved;
     protected ImageIcon icon;
+    protected int value;
 
     public void setWhite(boolean white){
         this.white = white;
@@ -34,6 +35,8 @@ public abstract class Piece {
     public boolean hasMoved() { return hasmoved; }
 
     public ImageIcon getIcon() { return icon; }
+
+    public int getValue() { return value; }
 
     public MoveVector[] addMove(Board[][] board, MoveVector[] moves, int x, int y, Boolean[] stop, int i){
         if(board[x][y].getPiece()!=null){
@@ -84,5 +87,6 @@ public abstract class Piece {
 
     public boolean wasDoubleStep() { return false; }
     public abstract String getType();
+    public abstract String toString();
     public abstract MoveVector[] availableMoves(Board[][] board);
 }

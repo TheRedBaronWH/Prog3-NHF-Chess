@@ -10,6 +10,7 @@ public class Rook extends Piece {
         setPoz(poz);
         setWhite(white);
         hasmoved = false;
+        value = 5;
         if(white) setIcon(new ImageIcon("src/Icons/WRook.png"));
         else setIcon(new ImageIcon("src/Icons/BRook.png"));
     }
@@ -66,5 +67,9 @@ public class Rook extends Piece {
     public String getType() {
         if(isWhite()) return "R";
         else return "r";
+    }
+
+    public String toString(){
+        return "Rook";
     }
 }
