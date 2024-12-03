@@ -44,8 +44,8 @@ public class Board {
 
     public static int movePiece(Board[][] board, Piece piece, int x, int y) {
         int i = 0;
+        boolean sanc = false;
         if(piece.isWhite()==UI.getWhiteTurn()) {
-            Piece temp = null;
             MoveVector[] moves = piece.availableMoves(board);
             if (MoveVector.contains(moves, x, y)) {
                 i = 1;
@@ -77,9 +77,10 @@ public class Board {
                     }
                     //sanc
                     case 4 -> {
-                        temp = board[x][y].getPiece();
-                        temp.setPoz(new Vector(piece.getPoz().getX(), piece.getPoz().getY()));
-                        temp.setHasMoved();
+                        sanc = true;
+                        //temp = board[x][y].getPiece();
+                        //temp.setPoz(new Vector(piece.getPoz().getX(), piece.getPoz().getY()));
+                        //temp.setHasMoved();
                     }
                     //király leszedés
                     case 3 -> {
@@ -97,9 +98,42 @@ public class Board {
                         else UI.WUpdatePieces(board[x][y].getPiece());
                     }
                 }
-                board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(temp);
-                piece.setPoz(new Vector(x, y));
-                board[x][y].setPiece(piece);
+                board[piece.getPoz().getX()][piece.getPoz().getY()].setPiece(null);
+                if(sanc) {
+                    if(piece.toString().equals("King")){
+                        if(y==0) {
+                            piece.setPoz(new Vector(x, y+2));
+                            board[x][y+2].setPiece(piece);
+                            Piece piece1 = new Rook(new Vector(x, y+3), piece.isWhite());
+                            board[x][y+3].setPiece(piece1);
+                        }
+                        else {
+                            piece.setPoz(new Vector(x, y-1));
+                            board[x][y-1].setPiece(piece);
+                            Piece piece1 = new Rook(new Vector(x, y-2), piece.isWhite());
+                            board[x][y-2].setPiece(piece1);
+                        }
+                    }
+                    else{
+                        if(piece.getPoz().getY()==0) {
+                            piece.setPoz(new Vector(x, y-1));
+                            board[x][y-1].setPiece(piece);
+                            Piece piece1 = new King(new Vector(x, y-2), piece.isWhite());
+                            board[x][y-2].setPiece(piece1);
+                        } else {
+                            piece.setPoz(new Vector(x, y+1));
+                            board[x][y+1].setPiece(piece);
+                            Piece piece1 = new King(new Vector(x, y+2), piece.isWhite());
+                            board[x][y+2].setPiece(piece1);
+                        }
+                    }
+                    board[x][y].setPiece(null);
+                    sanc = false;
+                }
+                else {
+                    piece.setPoz(new Vector(x, y));
+                    board[x][y].setPiece(piece);
+                }
                 //System.out.println(MoveVector.moveType(moves, x, y));
                 UI.UpdateUI(board);
                 UI.changeTurn();
