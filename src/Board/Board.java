@@ -32,29 +32,35 @@ public class Board {
     }
 
     public static Piece switchPiece(Piece piece, String newPiece){
-        if(newPiece.equals("Q")){
-            piece = new Queen(piece.getPoz(), true);
+        if(piece.isWhite()) {
+            System.out.println("in");
+            if (newPiece.equals("Queen")) {
+                piece = new Queen(piece.getPoz(), true);
+            }
+            if (newPiece.equals("Bishop")) {
+                piece = new Bishop(piece.getPoz(), true);
+            }
+            if (newPiece.equals("Knight")) {
+                piece = new Knight(piece.getPoz(), true);
+            }
+            if (newPiece.equals("Rook")) {
+                piece = new Rook(piece.getPoz(), true);
+            }
         }
-        if(newPiece.equals("q")){
-            piece = new Queen(piece.getPoz(), false);
-        }
-        if(newPiece.equals("B")){
-            piece = new Bishop(piece.getPoz(), true);
-        }
-        if(newPiece.equals("b")){
-            piece = new Bishop(piece.getPoz(), false);
-        }
-        if(newPiece.equals("N")){
-            piece = new Knight(piece.getPoz(), true);
-        }
-        if(newPiece.equals("n")){
-            piece = new Knight(piece.getPoz(), false);
-        }
-        if(newPiece.equals("R")){
-            piece = new Rook(piece.getPoz(), true);
-        }
-        if(newPiece.equals("r")){
-            piece = new Rook(piece.getPoz(), false);
+        else {
+            System.out.println("in");
+            if (newPiece.equals("Queen")) {
+                piece = new Queen(piece.getPoz(), false);
+            }
+            if (newPiece.equals("Bishop")) {
+                piece = new Bishop(piece.getPoz(), false);
+            }
+            if (newPiece.equals("Knight")) {
+                piece = new Knight(piece.getPoz(), false);
+            }
+            if (newPiece.equals("Rook")) {
+                piece = new Rook(piece.getPoz(), false);
+            }
         }
         return piece;
     }
@@ -69,8 +75,8 @@ public class Board {
             switch(MoveVector.moveType(moves, x, y)) {
                 //Pawn csere
                 case 7 -> {
-                    String newPiece = "Q";
-                    piece = switchPiece(piece, newPiece);
+                    PieceSelector selector = new PieceSelector(piece);
+                    selector.setVisible(true);
                 }
                 //EnPassant jobbra
                 case 6 -> {
