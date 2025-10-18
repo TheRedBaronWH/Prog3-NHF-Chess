@@ -1,4 +1,4 @@
-package Vector;
+package Model.Vector;
 
 public class Vector {
     private int x;

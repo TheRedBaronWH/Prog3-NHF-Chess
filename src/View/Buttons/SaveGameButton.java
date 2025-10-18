@@ -1,29 +1,28 @@
-package UI;
+package View.Buttons;
 
-import Board.*;
+import Model.BoardManager;
+import Model.BoardTile;
+
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
-public class SaveButton extends JButton {
-    public SaveButton(String text) {
+public class SaveGameButton extends JButton {
+    Color backgroundColor = Color.GREEN;
+    public SaveGameButton(String text) {
         super(text);
-
+        setBackground(backgroundColor);
         addActionListener(e -> {
             JFrame window = new JFrame("Save Game");
             window.setSize(400, 150);
             window.setLocationRelativeTo(null);
             window.setLayout(new GridLayout(3, 1));
-            Board[][] board = UI.getBoard();
+            BoardTile[][] board = BoardManager.getBoard();
 
             JTextPane textArea = new JTextPane();
-            textArea.setText(Board.saveBoardCode(board));
+            textArea.setText(BoardManager.getBoardCode());
             textArea.setEditable(false);
             StyledDocument doc = textArea.getStyledDocument();
             SimpleAttributeSet center = new SimpleAttributeSet();
@@ -33,32 +32,21 @@ public class SaveButton extends JButton {
 
             JPanel savePanel = new JPanel();
             JButton saveToFileButton = new JButton("Save to textFile");
-            saveToFileButton.addActionListener(e1 -> {
-                File fout = new File("BoardCode.txt");
-                try{
-                    if(!fout.exists()) fout.createNewFile();
-                    FileWriter fw = new FileWriter(fout);
-                    fw.write(textArea.getText());
-                    fw.close();
-                }
-                catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+            saveToFileButton.addActionListener(e1 -> BoardManager.saveBoard());
             savePanel.add(saveToFileButton);
 
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout());
+            JPanel buttonsPanel = new JPanel();
+            buttonsPanel.setLayout(new FlowLayout());
             JButton goBackButton = new JButton("Go Back");
             goBackButton.addActionListener(e1 -> window.dispose());
-            buttonPanel.add(goBackButton);
+            buttonsPanel.add(goBackButton);
 
             JButton exitButton = new JButton("Exit");
             exitButton.addActionListener(e1 -> System.exit(0));
-            buttonPanel.add(exitButton);
+            buttonsPanel.add(exitButton);
 
             window.add(savePanel);
-            window.add(buttonPanel);
+            window.add(buttonsPanel);
             window.setVisible(true);
         });
     }

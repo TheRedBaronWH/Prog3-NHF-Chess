@@ -1,16 +1,25 @@
-import Board.*;
-import Pieces.*;
-import Vector.*;
-import Vector.MoveVector;
+import Model.BoardManager;
+import Model.BoardTile;
+import Model.Pieces.Bishop;
+import Model.Pieces.Piece;
+import Model.Pieces.Queen;
+import Model.Vector.MoveVector;
+import Model.Vector.Vector;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BoardTest {
-    private Board[][] board = new Board[8][8];
+public class BoardTest extends BoardManager{
+    private BoardTile[][] board;
+
+    @BeforeEach
+    void resetBoardBeforeTests() {
+        resetBoard();
+    }
 
     @Test
     void testBoardInit() {
-        Board.setBoard(board);
+        board = BoardManager.loadBoardFromFile();
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board[i].length; j++){
                 Assertions.assertEquals(i, board[i][j].getPoz().getX());
@@ -51,13 +60,14 @@ public class BoardTest {
 
     @Test
     void testBoardSave() {
-        Board.setBoard(board);
-        Assertions.assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", Board.saveBoardCode(board));
+        BoardManager.createBasicBoard();
+        BoardManager.getBoardCode();
+        Assertions.assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", BoardManager.getBoardCode());
     }
 
     @Test
     void testBoardLoadCode(){
-        Board.loadBoardCode(board, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+        board = BoardManager.loadBoardFromCode("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
         Assertions.assertEquals("r", board[0][0].getPiece().getType());
         Assertions.assertEquals("n", board[0][1].getPiece().getType());
         Assertions.assertEquals("b", board[0][2].getPiece().getType());
@@ -92,7 +102,7 @@ public class BoardTest {
 
     @Test
     void testBoardLoadFile(){
-        Board.loadBoardFile(board);
+        board = BoardManager.loadBoardFromFile();
         Assertions.assertEquals("r", board[0][0].getPiece().getType());
         Assertions.assertEquals("n", board[0][1].getPiece().getType());
         Assertions.assertEquals("b", board[0][2].getPiece().getType());

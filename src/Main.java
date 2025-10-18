@@ -1,14 +1,9 @@
-import Board.*;
-import UI.*;
+import View.Screens.MainMenu;
 
 public class Main {
-    private static Board[][] board = new Board[8][8];
 
     public static void main(String[] args) {
-        Board.setBoard(board);
-        //Board.printBoard(board);
-
-        MainMenu ui = new MainMenu(board);
+        MainMenu ui = new MainMenu();
         ui.setVisible(true);
 
         /*

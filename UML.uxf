@@ -25,9 +25,9 @@
 +getPoz(): Vector
 +getIcon(): ImageIcon
 +getValue: int
-+addMove(board, moves, x, y, stop[], i):MoveVector[]
-+addMoveSingle(board, moves, x, y): MoveVector[]
-+addMoveSingle(board, moves, x, y, bypass:boolean): MoveVector[]
++addMove(boardTile, moves, x, y, stop[], i):MoveVector[]
++addMoveSingle(boardTile, moves, x, y): MoveVector[]
++addMoveSingle(boardTile, moves, x, y, bypass:boolean): MoveVector[]
 --
 +wasDoubleStep(): boolean   \\not abstract, cuz only Pawn overwrites it
 +getType(): abstact String   \\ezt a 3-at mindegyik felülirja, egyszerűség
@@ -48,7 +48,7 @@
 -doubleStep: boolean
 --
 +Pawn(poz, white)
-+addMoveSingle(board,
++addMoveSingle(boardTile,
     moves, x, y): 
       MoveVector[]</panel_attributes>
     <additional_attributes/>
@@ -78,7 +78,7 @@ Package: Pieces</panel_attributes>
 
 --
 +Rook(poz, white)
-+sanc(board, moves,
++sanc(boardTile, moves,
     x, y): MoveVector[]</panel_attributes>
     <additional_attributes/>
   </element>
@@ -125,7 +125,7 @@ Package: Pieces</panel_attributes>
 
 --
 +King(poz, white)
-+sanc(board, moves,
++sanc(boardTile, moves,
     x, y): MoveVector[]</panel_attributes>
     <additional_attributes/>
   </element>
@@ -240,15 +240,15 @@ Package: Board</panel_attributes>
 +getPoz(): Vector
 +getPiece(): Piece
 +setPiece(piece)
-+checkPawnEnd(board, piece, x, y)
-+movePiece(board, piece, x, y): int
-+setBoard(board): Board[][]
-+loadBoardFile(board): Board[][]
++checkPawnEnd(boardTile, piece, x, y)
++movePiece(boardTile, piece, x, y): int
++setBoard(boardTile): Board[][]
++loadBoardFile(boardTile): Board[][]
 +goodCode(code): boolean
-+loadBoardCode(board, code): Board[][]
-+printBoard(board)
++loadBoardCode(boardTile, code): Board[][]
++printBoard(boardTile)
 +printMoves(moves):
-+saveBoardCode(board): String</panel_attributes>
++saveBoardCode(boardTile): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -321,7 +321,7 @@ Package: Vector</panel_attributes>
       <h>450</h>
     </coordinates>
     <panel_attributes>lw=2
-Package: UI</panel_attributes>
+Package: View</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -332,17 +332,17 @@ Package: UI</panel_attributes>
       <w>230</w>
       <h>200</h>
     </coordinates>
-    <panel_attributes>UI
+    <panel_attributes>View
 extends JFrame
 --
--lots of Swing stuff for UI
+-lots of Swing stuff for View
 --
 +endScreen(winner: String)
 +shutDown()
-+UI(board)
++View(boardTile)
 +WUpdatePieces(piece)
 +BUpdatePieces(piece)
-+UpdateUI(board)
++UpdateUI(boardTile)
 +UpdateUI(moves, x, y)</panel_attributes>
     <additional_attributes/>
   </element>
@@ -359,7 +359,7 @@ extends JFrame
 --
 included logo, and 4 buttons
 --
-+MainMenu(board)</panel_attributes>
++MainMenu(boardTile)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -373,7 +373,7 @@ included logo, and 4 buttons
     <panel_attributes>Rules
 extends JFrame
 --
-included long textbox of rules 
+included long textbox of rulesScreen
 and OK button
 --
 +Rules()</panel_attributes>

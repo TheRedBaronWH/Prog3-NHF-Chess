@@ -1,11 +1,14 @@
-package UI;
+package View.Buttons;
 
-import Board.*;
+import Model.BoardManager;
+import Model.BoardTile;
+import View.Screens.GameScreen;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Button extends JButton {
+public class BoardButton extends JButton {
     boolean hasPiece;
     boolean canMoveTo;
     int i;
@@ -29,21 +32,21 @@ public class Button extends JButton {
 
     class ButtonClickedListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Board[][] board = UI.getBoard();
+            BoardTile[][] board = BoardManager.getBoard();
             if(canMoveTo) {
                 //System.out.println(x + " " + y);
-                Board.movePiece(board, board[x][y].getPiece() , i, j);
-                UI.UpdateUI(board);
+                BoardTile.movePiece(board[x][y].getPiece() , i, j);
+                GameScreen.UpdateUI();
             }
             else {
                 if (hasPiece) {
-                    UI.UpdateUI(board[i][j].getPiece().availableMoves(board), i, j);
+                    GameScreen.UpdateUI(board[i][j].getPiece().availableMoves(board), i, j);
                 }
             }
         }
     }
 
-    public Button(int i, int j) {
+    public BoardButton(int i, int j) {
         hasPiece = false;
         canMoveTo = false;
         this.i = i;

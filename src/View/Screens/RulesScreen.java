@@ -1,11 +1,11 @@
-package UI;
+package View.Screens;
 
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 
-public class Rules extends JFrame {
-    public Rules() {
+public class RulesScreen extends JFrame {
+    public RulesScreen() {
         String text = "Fehér kezd;\n" +
                 "Bábuk mozgása:\n" +
                 "\t1.Gyalogos (Pawn) – Csak előre, jobbra-előre, és balra-előre tudd lépni. Bábut leszedni csak balra-előre vagy jobbra-előre lépéssel tud\n" +
