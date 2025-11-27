@@ -1,9 +1,9 @@
 package Model.Pieces;
 
+import Model.BoardManager;
 import Model.BoardTile;
 import Model.Vector.MoveVector;
 import Model.Vector.Vector;
-import View.Screens.GameScreen;
 
 import javax.swing.*;
 
@@ -33,20 +33,21 @@ public class King extends Piece{
         return moves;
     }
 
-    public MoveVector[] availableMoves(BoardTile[][] boardTile){
-        if(isWhite() != GameScreen.getWhiteTurn()) return new MoveVector[0];
+    MoveVector[] availableMoves(){
+        BoardTile[][] board = BoardManager.getBoard();
+        if(isWhite() != BoardManager.getWhiteTurn()) return new MoveVector[0];
         int x = getPoz().getX();
         int y = getPoz().getY();
         MoveVector[] moves = new MoveVector[0];
-        if(x-1>=0) moves = addMoveSingle(boardTile, moves, x - 1, y);
-        if(x-1>=0 && y+1<=7) moves = addMoveSingle(boardTile, moves, x - 1, y + 1);
-        if(y+1<=7) moves = addMoveSingle(boardTile, moves, x, y + 1);
-        if(x+1<=7 && y+1<=7) moves = addMoveSingle(boardTile, moves, x + 1, y + 1);
-        if(x+1<=7) moves = addMoveSingle(boardTile, moves, x + 1, y);
-        if(x+1<=7 && y-1>=0) moves = addMoveSingle(boardTile, moves, x + 1, y - 1);
-        if(y-1>=0) moves = addMoveSingle(boardTile, moves, x, y - 1);
-        if(x-1>=0 && y-1>=0) moves = addMoveSingle(boardTile, moves, x - 1, y - 1);
-        if(!hasMoved()) moves = sanc(boardTile, moves, x, y);
+        if(x-1>=0) moves = addMoveSingle(board, moves, x - 1, y);
+        if(x-1>=0 && y+1<=7) moves = addMoveSingle(board, moves, x - 1, y + 1);
+        if(y+1<=7) moves = addMoveSingle(board, moves, x, y + 1);
+        if(x+1<=7 && y+1<=7) moves = addMoveSingle(board, moves, x + 1, y + 1);
+        if(x+1<=7) moves = addMoveSingle(board, moves, x + 1, y);
+        if(x+1<=7 && y-1>=0) moves = addMoveSingle(board, moves, x + 1, y - 1);
+        if(y-1>=0) moves = addMoveSingle(board, moves, x, y - 1);
+        if(x-1>=0 && y-1>=0) moves = addMoveSingle(board, moves, x - 1, y - 1);
+        if(!hasMoved()) moves = sanc(board, moves, x, y);
         return moves;
     }
 

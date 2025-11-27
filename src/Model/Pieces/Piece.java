@@ -8,6 +8,7 @@ import Model.Vector.Vector;
 import javax.swing.*;
 
 public abstract class Piece {
+    protected MoveVector[] possibleMoves = null;
     protected Vector poz;
     protected boolean white;
     protected boolean hasmoved;
@@ -40,6 +41,15 @@ public abstract class Piece {
     public ImageIcon getIcon() { return icon; }
 
     public int getValue() { return value; }
+
+    private void setPossibleMoves(){
+        possibleMoves = availableMoves();
+    }
+
+    public MoveVector[] getPossibleMoves() {
+        setPossibleMoves();
+        return possibleMoves;
+    }
 
     public MoveVector[] addMove(BoardTile[][] boardTile, MoveVector[] moves, int x, int y, Boolean[] stop, int i){
         if(boardTile[x][y].getPiece()!=null){
@@ -93,5 +103,5 @@ public abstract class Piece {
     public boolean wasDoubleStep() { return false; }
     public abstract String getType();
     public abstract String toString();
-    public abstract MoveVector[] availableMoves(BoardTile[][] boardTile);
+    abstract MoveVector[] availableMoves();
 }

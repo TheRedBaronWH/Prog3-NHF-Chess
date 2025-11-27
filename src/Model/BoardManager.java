@@ -9,13 +9,14 @@ import java.util.Set;
 public class BoardManager {
     private static final Set<String> PIECE_TYPES = Set.of("r", "R", "b", "B", "n", "N", "k", "K", "q", "Q", "p", "P");
     private static BoardTile[][] board = null;
+    private static boolean whiteTurn = true;
+
     public static BoardTile[][] getBoard() {
         if(board == null) createBasicBoard();
         return board;
     }
     public static void setBoard(BoardTile[][] board) {
-        if(BoardManager.board == null) BoardManager.board = board;
-        else throw new RuntimeException("Board already exists, cannot set again");
+        BoardManager.board = board;
     }
     protected static void resetBoard() {
         board = null;
@@ -159,4 +160,8 @@ public class BoardManager {
         }
         return n == 64;
     }
+
+    public static boolean getWhiteTurn() { return whiteTurn; }
+
+    public static void changeTurn() { whiteTurn = !whiteTurn; }
 }

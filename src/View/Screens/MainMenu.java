@@ -1,8 +1,8 @@
 package View.Screens;
 
 import Model.BoardManager;
-import View.Panels.ButtonsPanel;
-import View.Panels.LogoPanel;
+import View.Panels.MainMenuButtonsPanel;
+import View.Panels.MainMenuTitlePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,8 +22,8 @@ public class MainMenu extends JFrame {
         JPanel mainMenuPanel = new JPanel();
         mainMenuPanel.setLayout(new BorderLayout());
 
-        LogoPanel logoPanel = new LogoPanel();
-        ButtonsPanel buttonsPanel = new ButtonsPanel(
+        MainMenuTitlePanel titlePanel = new MainMenuTitlePanel();
+        MainMenuButtonsPanel buttonsPanel = new MainMenuButtonsPanel(
                 ()->{
                     BoardManager.createBasicBoard();
                     gameScreen.StartGame();
@@ -44,7 +44,7 @@ public class MainMenu extends JFrame {
                 }
         );
 
-        mainMenuPanel.add(logoPanel, BorderLayout.NORTH);
+        mainMenuPanel.add(titlePanel, BorderLayout.NORTH);
         mainMenuPanel.add(buttonsPanel, BorderLayout.CENTER);
         add(mainMenuPanel, BorderLayout.CENTER);
     }

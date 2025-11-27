@@ -3,12 +3,12 @@ package View.Panels;
 import javax.swing.*;
 import java.awt.*;
 
-public class LogoPanel extends JPanel {
+public class MainMenuTitlePanel extends JPanel {
     ImageIcon logo = new ImageIcon("src/Resources/BKing.png");
     JLabel logoLabel = new JLabel(logo, SwingConstants.CENTER);
     JLabel titleLabel = new JLabel("ChessGame", SwingConstants.CENTER);
 
-    public LogoPanel() {
+    public MainMenuTitlePanel() {
         setLayout(new BorderLayout());
 
         logoLabel.setBorder(BorderFactory.createEmptyBorder(50, 10, 0, 10));

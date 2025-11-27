@@ -1,9 +1,9 @@
 package Model.Pieces;
 
+import Model.BoardManager;
 import Model.BoardTile;
 import Model.Vector.MoveVector;
 import Model.Vector.Vector;
-import View.Screens.GameScreen;
 
 import javax.swing.*;
 
@@ -17,8 +17,9 @@ public class Bishop extends Piece {
         else setIcon(new ImageIcon(iconSource + "BBishop.png"));
     }
 
-    public MoveVector[] availableMoves(BoardTile[][] boardTile){
-        if(isWhite() != GameScreen.getWhiteTurn()) return new MoveVector[0];
+    MoveVector[] availableMoves(){
+        BoardTile[][] board = BoardManager.getBoard();
+        if(isWhite() != BoardManager.getWhiteTurn()) return new MoveVector[0];
         int x = getPoz().getX();
         int y = getPoz().getY();
         MoveVector[] moves = new MoveVector[0];
@@ -28,13 +29,13 @@ public class Bishop extends Piece {
         }
         for(int i = 1; i < 8; i++){
             if(x-i>=0 && y+i<=7 && !stop[0])
-                moves = addMove(boardTile, moves, x - i, y + i, stop, 0);
+                moves = addMove(board, moves, x - i, y + i, stop, 0);
             if(x+i<=7 && y+i<=7 && !stop[1])
-                moves = addMove(boardTile, moves, x + i, y + i, stop, 1);
+                moves = addMove(board, moves, x + i, y + i, stop, 1);
             if(x+i<=7 && y-i>=0 && !stop[2])
-                moves = addMove(boardTile, moves, x + i, y - i, stop, 2);
+                moves = addMove(board, moves, x + i, y - i, stop, 2);
             if(x-i>=0 && y-i>=0 && !stop[3])
-                moves = addMove(boardTile, moves, x - i, y - i, stop, 3);
+                moves = addMove(board, moves, x - i, y - i, stop, 3);
         }
         return moves;
     }

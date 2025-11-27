@@ -1,10 +1,10 @@
 package Model.Pieces;
 
+import Model.BoardManager;
 import Model.BoardTile;
 import Model.MoveTypes;
 import Model.Vector.MoveVector;
 import Model.Vector.Vector;
-import View.Screens.GameScreen;
 
 import javax.swing.*;
 
@@ -25,12 +25,13 @@ public class Pawn extends Piece {
         return doubleStep;
     }
 
-    public MoveVector[] availableMoves(BoardTile[][] boardTile) {
-        if(isWhite() != GameScreen.getWhiteTurn()) return new MoveVector[0];
+    MoveVector[] availableMoves() {
+        BoardTile[][] board = BoardManager.getBoard();
+        if(isWhite() != BoardManager.getWhiteTurn()) return new MoveVector[0];
         int x = getPoz().getX();
         int y = getPoz().getY();
         MoveVector[] moves = new MoveVector[0];
-        moves = addMoveSingle(boardTile, moves, x, y);
+        moves = addMoveSingle(board, moves, x, y);
         return moves;
     }
 

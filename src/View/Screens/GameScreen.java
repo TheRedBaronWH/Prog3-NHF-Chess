@@ -18,13 +18,9 @@ public class GameScreen extends JFrame {
     private static WhitePlayerPanel whitePlayerPanel= new WhitePlayerPanel();
 
     private static JPanel saveButtonPanel = new JPanel();
-    private static SaveGameButton saveButton = new SaveGameButton("Save");
+    private static SaveGameButton saveButton = new SaveGameButton();
 
     private static ChessBoard chessBoard = new ChessBoard();
-
-    private static boolean whiteTurn = true;
-    public static boolean getWhiteTurn() { return whiteTurn; }
-    public static void changeTurn() { whiteTurn = !whiteTurn; }
 
     public GameScreen() {
         setTitle("ChessGame");
@@ -63,11 +59,11 @@ public class GameScreen extends JFrame {
     }
 
     public static void UpdateUI(){
-        chessBoard.updateBoardButtons();
+        chessBoard.updateBoard();
     }
 
-    public static void UpdateUI(MoveVector[] moves, int x, int y){
-        chessBoard.updateBoardButtons(moves, x, y);
+    public static void UpdateUI_HighlightPossibleMoves(MoveVector[] moves, int x, int y){
+        chessBoard.updateBoard_HighlightPossibleMoves(moves, x, y);
     }
 
 }

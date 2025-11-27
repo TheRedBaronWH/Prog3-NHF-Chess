@@ -8,9 +8,9 @@ import View.Screens.RulesScreen;
 import javax.swing.*;
 import java.awt.*;
 
-public class ButtonsPanel extends JPanel {
+public class MainMenuButtonsPanel extends JPanel {
     RulesScreen rulesScreen = new RulesScreen();
-    public ButtonsPanel(
+    public MainMenuButtonsPanel(
             ActionListener newGameActionListener,
             ActionListener loadFromFileActionListener,
             ActionListenerStringInput loadFromCodeActionListener,

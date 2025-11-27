@@ -1,9 +1,9 @@
 package Model.Pieces;
 
+import Model.BoardManager;
 import Model.BoardTile;
 import Model.Vector.MoveVector;
 import Model.Vector.Vector;
-import View.Screens.GameScreen;
 
 import javax.swing.*;
 
@@ -35,8 +35,9 @@ public class Rook extends Piece {
         return moves;
     }
 
-    public MoveVector[] availableMoves(BoardTile[][] boardTile){
-        if(isWhite() != GameScreen.getWhiteTurn()) return new MoveVector[0];
+    MoveVector[] availableMoves(){
+        BoardTile[][] board = BoardManager.getBoard();
+        if(isWhite() != BoardManager.getWhiteTurn()) return new MoveVector[0];
         int x = getPoz().getX();
         int y = getPoz().getY();
         MoveVector[] moves = new MoveVector[0];
@@ -47,24 +48,24 @@ public class Rook extends Piece {
         }
         for(int i = 1; i < 8; i++){
             if(x-i>=0 && !stop[0])
-                moves = addMove(boardTile, moves, x - i, y, stop, 0);
+                moves = addMove(board, moves, x - i, y, stop, 0);
             if(y+i<=7 && !stop[1])
-                if(boardTile[x][y+i].getPiece() != null) {
-                    if (!boardTile[x][y + i].getPiece().getType().equals("K") && !boardTile[x][y + i].getPiece().getType().equals("k"))
-                        moves = addMove(boardTile, moves, x, y + i, stop, 1);
+                if(board[x][y+i].getPiece() != null) {
+                    if (!board[x][y + i].getPiece().getType().equals("K") && !board[x][y + i].getPiece().getType().equals("k"))
+                        moves = addMove(board, moves, x, y + i, stop, 1);
                 }
-                else moves = addMove(boardTile, moves, x, y + i, stop, 1);
+                else moves = addMove(board, moves, x, y + i, stop, 1);
             if(x+i<=7 && !stop[2])
-                moves = addMove(boardTile, moves, x + i, y, stop, 2);
+                moves = addMove(board, moves, x + i, y, stop, 2);
             if(y-i>=0 && !stop[3])
-                if(boardTile[x][y-i].getPiece() != null) {
-                    if (!boardTile[x][y - i].getPiece().getType().equals("K") && !boardTile[x][y - i].getPiece().getType().equals("k"))
-                        moves = addMove(boardTile, moves, x, y - i, stop, 3);
+                if(board[x][y-i].getPiece() != null) {
+                    if (!board[x][y - i].getPiece().getType().equals("K") && !board[x][y - i].getPiece().getType().equals("k"))
+                        moves = addMove(board, moves, x, y - i, stop, 3);
                 }
-                else moves = addMove(boardTile, moves, x, y - i, stop, 3);
+                else moves = addMove(board, moves, x, y - i, stop, 3);
 
         }
-        if(!hasMoved()) moves = sanc(boardTile, moves, x, y);
+        if(!hasMoved()) moves = sanc(board, moves, x, y);
         return moves;
     }
 

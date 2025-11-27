@@ -45,13 +45,12 @@ public class BoardTile {
         BoardTile[][] board = BoardManager.getBoard();
         int i = 0;
         boolean sanc = false;
-        if(piece.isWhite()== GameScreen.getWhiteTurn()) {
-            MoveVector[] moves = piece.availableMoves(board);
+        if(piece.isWhite() == BoardManager.getWhiteTurn()) {
+            MoveVector[] moves = piece.getPossibleMoves();
             if (MoveVector.contains(moves, x, y)) {
                 i = 1;
                 piece.setHasMoved();
                 switch (MoveVector.moveType(moves, x, y)) {
-                    //Pawn csere
                     case MoveTypes.PAWN_SWITCH -> {
                         PieceSelectorDialog selector = new PieceSelectorDialog(piece.isWhite(), piece.getPoz());
                         selector.setVisible(true);
@@ -59,7 +58,7 @@ public class BoardTile {
                         selector.dispose();
                         GameScreen.UpdateUI();
                     }
-                    //EnPassant jobbra
+
                     case MoveTypes.PAWN_ENPASSANT_R -> {
                         if (board[x][y - 1].getPiece().isWhite()) i = 2;
                         else i = 3;
@@ -67,7 +66,7 @@ public class BoardTile {
                         else GameScreen.UpdateWhitePieceCounter(board[x][y - 1].getPiece());
                         board[x][y - 1].setPiece(null);
                     }
-                    //EnPassant balra
+
                     case MoveTypes.PAWN_ENPASSANT_L -> {
                         if (board[x][y + 1].getPiece().isWhite()) i = 2;
                         else i = 3;
@@ -75,14 +74,11 @@ public class BoardTile {
                         else GameScreen.UpdateWhitePieceCounter(board[x][y + 1].getPiece());
                         board[x][y + 1].setPiece(null);
                     }
-                    //sanc
+
                     case MoveTypes.KING_ROOK_SWITCH -> {
                         sanc = true;
-                        //temp = board[x][y].getPiece();
-                        //temp.setPoz(new Vector(piece.getPoz().getX(), piece.getPoz().getY()));
-                        //temp.setHasMoved();
                     }
-                    //király leszedés
+
                     case MoveTypes.KING_TAKEN -> {
                         String winner;
                         if (board[x][y].getPiece().getType().equals("K")) {
@@ -95,7 +91,7 @@ public class BoardTile {
                         endScreen.setVisible(true);
                         System.exit(0);
                     }
-                    //normális leszedés
+
                     case MoveTypes.PIECE_TAKEN -> {
                         if (board[x][y].getPiece().isWhite()) i = 2;
                         else i = 3;
@@ -141,9 +137,10 @@ public class BoardTile {
                     piece.setPoz(new Vector(x, y));
                     board[x][y].setPiece(piece);
                 }
+
                 //System.out.println(MoveVector.moveType(moves, x, y));
                 GameScreen.UpdateUI();
-                GameScreen.changeTurn();
+                BoardManager.changeTurn();
             }
         }
     }

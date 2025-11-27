@@ -3,70 +3,70 @@ package View.Panels;
 import Model.BoardManager;
 import Model.BoardTile;
 import Model.Vector.MoveVector;
-import View.Buttons.BoardButton;
+import View.Buttons.BoardTileButton;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ChessBoard extends JPanel {
-    private static BoardButton[][] boardButtons;
+    private static BoardTileButton[][] boardTileButtons;
 
     public ChessBoard() {
-        boardButtons = new BoardButton[8][8];
+        boardTileButtons = new BoardTileButton[8][8];
         setLayout(new GridLayout(8,8));
         setPreferredSize(new Dimension(800, 800));
         for(int i=0; i<8; i++) {
             for(int j=0; j<8; j++) {
-                boardButtons[i][j] = new BoardButton(i, j);
-                boardButtons[i][j].setPreferredSize(new Dimension(100, 100));
-                add(boardButtons[i][j]);
+                boardTileButtons[i][j] = new BoardTileButton(i, j);
+                boardTileButtons[i][j].setPreferredSize(new Dimension(100, 100));
+                add(boardTileButtons[i][j]);
             }
         }
     }
 
-    public void updateBoardButtons(){
+    public void updateBoard(){
         BoardTile[][] board = BoardManager.getBoard();
         for(int i=0; i<8; i++) {
             for(int j=0; j<8; j++) {
-                if ((i+j)%2==0) boardButtons[i][j].setBackground(Color.WHITE);
-                else boardButtons[i][j].setBackground(Color.BLACK);
-                boardButtons[i][j].setCanMoveTo(false, 0, 0);
+                if ((i+j)%2==0) boardTileButtons[i][j].setBackground(Color.WHITE);
+                else boardTileButtons[i][j].setBackground(Color.BLACK);
+                boardTileButtons[i][j].notMovingHere();
                 if(board[i][j].getPiece()!=null){
-                    boardButtons[i][j].setIcon(board[i][j].getPiece().getIcon());
-                    boardButtons[i][j].setPoz(i, j);
-                    boardButtons[i][j].setHasPiece(true);
+                    boardTileButtons[i][j].setIcon(board[i][j].getPiece().getIcon());
+                    boardTileButtons[i][j].setPoz(i, j);
+                    boardTileButtons[i][j].setHasPiece(true);
                 }
                 else {
-                    boardButtons[i][j].setIcon(null);
-                    boardButtons[i][j].setHasPiece(false);
+                    boardTileButtons[i][j].setIcon(null);
+                    boardTileButtons[i][j].setHasPiece(false);
                 }
             }
         }
     }
 
-    public void updateBoardButtons(MoveVector[] moves, int x, int y){
+    public void updateBoard_HighlightPossibleMoves(MoveVector[] moves, int x, int y){
         BoardTile[][] board = BoardManager.getBoard();
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 if(MoveVector.contains(moves, i, j)) {
-                    boardButtons[i][j].setCanMoveTo(true, x ,y);
-                    if(boardButtons[i][j].getHasPiece()){
+                    boardTileButtons[i][j].movingHereFrom(x, y);
+                    if(boardTileButtons[i][j].getHasPiece()){
                         if(board[i][j].getPiece().isWhite()== board[x][y].getPiece().isWhite()){
-                            boardButtons[i][j].setBackground(Color.GREEN);
+                            boardTileButtons[i][j].setBackground(Color.GREEN);
                         }
-                        else boardButtons[i][j].setBackground(Color.RED);
+                        else boardTileButtons[i][j].setBackground(Color.RED);
                     }
                     else {
                         if(MoveVector.moveType(moves, i, j) == 5 || MoveVector.moveType(moves, i, j) == 6){
-                            boardButtons[i][j].setBackground(Color.RED);
+                            boardTileButtons[i][j].setBackground(Color.RED);
                         }
-                        else boardButtons[i][j].setBackground(Color.YELLOW);
+                        else boardTileButtons[i][j].setBackground(Color.YELLOW);
                     }
                 }
                 else{
-                    boardButtons[i][j].setCanMoveTo(false, 0, 0);
-                    if ((i+j)%2==0) boardButtons[i][j].setBackground(Color.WHITE);
-                    else boardButtons[i][j].setBackground(Color.BLACK);
+                    boardTileButtons[i][j].notMovingHere();
+                    if ((i+j)%2==0) boardTileButtons[i][j].setBackground(Color.WHITE);
+                    else boardTileButtons[i][j].setBackground(Color.BLACK);
                 }
             }
         }
