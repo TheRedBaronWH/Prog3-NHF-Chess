@@ -3,4 +3,4 @@
 
 Alkalmazáshoz felhasznált tehnológiák: Java + Swing
 
-Note: Bizonyos lépésel (pl EnPassant) nem működnek helyesen
+Note: Bizonyos lépések (pl EnPassant) nem működnek helyesen
