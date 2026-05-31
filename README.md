@@ -5,5 +5,5 @@ Használt tehnológiák:
 -Java  
 -Swing
 
-Note: Bizonyos lépések (pl EnPassant) nem működnek helyesen
+Note: Bizonyos lépések (pl EnPassant) nem működnek helyesen  
 Időtartam: ~1 hét - Nov/Dec 2024
